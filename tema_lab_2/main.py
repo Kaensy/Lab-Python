@@ -4,7 +4,9 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 from datetime import date,datetime
 
-nr =int(input("Ex Disponibile : 1 2 11 \nNr Problemei : "))
+
+
+nr =int(input("Ex Disponibile : 1 2 11 12(not) 15 \nNr Problemei : "))
 
 if nr==1:
     n = int(input("n="))
@@ -58,6 +60,54 @@ elif nr==11:
         print("Nr a si b au proprietatea P")
     else:
         print("Nr a si b nu au proprietatea P")
+elif nr==12:
+    n = int(input("n = "))
+    if n==1:
+        print("1")
+    else:
+        n -= 1
+        nr_curent = 1
+        while n>0:
+            nr_curent+=1
+            for k in range(2,nr_curent):
+                if nr_curent%k==0:
+                    prim=True
+                    for d in range(2,k):
+                        if k%d==0:
+                            prim=False
+                    if k==2:
+                        prim=True
+                    if prim==True and n>0:
+                        n-=1
+                        if(n==0):
+                            print(k)
+
+
+
+
+
+
+
+
+
+
+
+elif nr==15:
+    n =int(input("n = "))
+    p=n
+    if n<3:
+        print("Nu exista numar")
+    else:
+        gasit=False
+        while gasit==False:
+            p-=1
+            prim=True
+            for d in range(2, p):
+                if p%d==0:
+                    prim=False
+            if prim==True:
+                gasit=True
+                print(p)
 
 
 
