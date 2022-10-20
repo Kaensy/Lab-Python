@@ -51,25 +51,25 @@ while choice!=4:
         lungime_lista=int(len(lista))
         lista_declarata=True
     elif choice==2 and lista_declarata:
-        lungime_secventa_max=0
-        index_stang_salvat=0
-        index_drept_salvat=0
+        lungime_secventa_max = 0
+        index_stang_salvat = 0
+        index_drept_salvat = 0
         for i in range(lungime_lista-1):
-            lungime_secventa=0
-            index_stang=i
-            index_drept=i+1
+            lungime_secventa = 0
+            index_stang = i
+            index_drept = i + 1
             while verificare_vectori_char(int(lista[index_stang]),int(lista[index_drept])) and index_drept<lungime_lista-1:
-                index_stang=index_stang+1
-                index_drept=index_drept+1
-                lungime_secventa=lungime_secventa+1
+                index_stang = index_stang + 1
+                index_drept = index_drept + 1
+                lungime_secventa = lungime_secventa + 1
             if verificare_vectori_char(int(lista[index_stang]),int(lista[index_drept])):
                 index_stang = index_stang + 1
                 index_drept = index_drept + 1
                 lungime_secventa = lungime_secventa + 1
             if lungime_secventa>lungime_secventa_max:
-                lungime_secventa_max=lungime_secventa
-                index_stang_salvat=i
-                index_drept_salvat=index_drept
+                lungime_secventa_max = lungime_secventa
+                index_stang_salvat = i
+                index_drept_salvat = index_drept
         if lungime_secventa_max>0:
             print("Secventa de lungime maxima : ")
             for j in range(index_stang_salvat,index_drept_salvat):

@@ -4,9 +4,20 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 from datetime import date,datetime
 
+def este_prim(a):
+    if a<2:
+        return False
+    elif a==2:
+        return True
+    else:
+        d=2
+        while d*d<=a:
+            if a%d==0:
+                return False
+            d=d+1
+    return True
 
-
-nr =int(input("Ex Disponibile : 1 2 11 12(not) 15 \nNr Problemei : "))
+nr =int(input("Ex Disponibile : 1 2 11 12 15 \nNr Problemei : "))
 
 if nr==1:
     n = int(input("n="))
@@ -69,7 +80,7 @@ elif nr==12:
         nr_curent = 1
         while n>0:
             nr_curent+=1
-            for k in range(2,nr_curent):
+            for k in range(2,nr_curent+1):
                 if nr_curent%k==0:
                     prim=True
                     for d in range(2,k):
@@ -81,17 +92,6 @@ elif nr==12:
                         n-=1
                         if(n==0):
                             print(k)
-
-
-
-
-
-
-
-
-
-
-
 elif nr==15:
     n =int(input("n = "))
     p=n
