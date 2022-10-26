@@ -1,4 +1,4 @@
-# 4. oricare doua elemente consecutive au cel putin 2 cifre distincte comune
+# 14. oricare doua elemente consecutive au cel putin 2 cifre distincte comune
 # 1. x[i] < x[i+1] < ... < x[i+p]
 
 
@@ -36,6 +36,11 @@ def verificare_prop_1(a,b):
         return True
     return False
 
+def test_verificare_vectori_char():
+    assert verificare_vectori_char(12,23) == False
+
+
+
 afisare="""
 1.Citire lista nr intregi ( Numere despartite prin spatiu )
 2.(14) Secventa de lungime maxima cu proprietatea ca oricare doua elemente consecutive au cel putin 2 cifre distincte comune
@@ -71,9 +76,7 @@ while choice!=4:
                 index_stang_salvat = i
                 index_drept_salvat = index_drept
         if lungime_secventa_max>0:
-            print("Secventa de lungime maxima : ")
-            for j in range(index_stang_salvat,index_drept_salvat):
-                print(lista[j],end=" ")
+            print("Secventa de lungime maxima : ",lista[index_stang_salvat:index_drept_salvat])
             print()
         else:
             print("Nu exista astfel de secventa")
