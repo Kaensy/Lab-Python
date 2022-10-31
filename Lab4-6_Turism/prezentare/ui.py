@@ -2,7 +2,7 @@ from datetime import date
 from business.service_pachete import adauga_pachet_service
 from domain.pachet import to_string_pachet
 from infrastructura.repository_persoane import creeare_lista_interval, creeare_lista_destinatie_pret, \
-    creeare_lista_datasfarsit
+    creeare_lista_datasfarsit, nr_pachete_destinatie
 
 
 # Creeaza functii de service pt functile de creare
@@ -42,6 +42,12 @@ def run_ui():
 2.Tiparirea pachetelor dintr-o locatie si cu pret mai mic decat o suma 
 3.Tiparirea pachetelor cu o anumita data de sfarsit 
 4.Inapoi"""
+    interfata_rapoarte = """
+1.Nr pachete pentru o destinatie
+2.Pachete dintr-o perioada ordonate crescator ( x )
+3.Media de pret pentru o destinatie ( x )
+4.Inapoi
+"""
     while True:
         print(interfata_baza)
         command = input(">>>")
@@ -84,7 +90,7 @@ def run_ui():
             while command:
                 if command == "1":
                     lista_cautata = []
-                    interval = input("Introduce-ti intervalul de timp dorit : ")
+                    interval = input("Introduceti intervalul de timp dorit : ")
                     interval = interval.split()
                     if len(interval) == 6:
                         data_inceput_interval = date(int(interval[2]), int(interval[1]), int(interval[0]))
@@ -104,7 +110,7 @@ def run_ui():
                         print("Interval Invalid ")
                 elif command == "2":
                     lista_cautata = []
-                    params = input("Introduce-ti Destinatia cautata si pretul maxim : ")
+                    params = input("Introduceti Destinatia cautata si pretul maxim : ")
                     params = params.split()
                     if len(params) == 2 and params[1].isdigit():
                         destinatie_cautata = str(params[0])
@@ -126,7 +132,7 @@ def run_ui():
                         print("Pret invalid")
                 elif command == "3":
                     lista_cautata = []
-                    params = input("Introduce-ti Data de Sfarsit cautata : ")
+                    params = input("Introduceti Data de Sfarsit cautata : ")
                     params = params.split()
                     data_sfarsit_cautata = date(int(params[2]), int(params[1]), int(params[0]))
                     creeare_lista_datasfarsit(lista_cautata, pachete, data_sfarsit_cautata)
@@ -151,6 +157,25 @@ def run_ui():
                     print(interfata_cautare)
                     if lista_cautata:
                         print("5.Filtrare")
+                    command = input(">>>")
+                    command = command.strip()
+        elif command == "4":
+            print(interfata_rapoarte)
+            command = input(">>>")
+            command = command.strip()
+            while command:
+                if command == "1":
+                    destinatie_raport = input("Introduceti Destinatia cautata : ")
+                    destinatie_raport = destinatie_raport.strip()
+                    print(nr_pachete_destinatie(pachete, destinatie_raport))
+                    print(interfata_rapoarte)
+                    command = input(">>>")
+                    command = command.strip()
+                if command == "4":
+                    command = False
+                else:
+                    print("Comanda invalida")
+                    print(interfata_rapoarte)
                     command = input(">>>")
                     command = command.strip()
         elif command == "7":

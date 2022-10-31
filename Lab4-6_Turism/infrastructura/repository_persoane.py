@@ -68,3 +68,16 @@ def creeare_lista_datasfarsit(l_noua,l,data_sfarsit):
     for pachet in l:
         if get_datasfarsit_pachet(pachet)==data_sfarsit:
             l_noua.append(pachet)
+
+def nr_pachete_destinatie(l,destinatie):
+    """
+    returneaza numarul de pachete pachet cu destinatia identica cu destinatie
+    :param l: lista de pachete unice
+    :param destinatie: string
+    :return: rez - int : numarul de pachete pachet cu destinatia destinatie == destinatie
+    """
+    nr = int(0)
+    for pachet in l:
+        if get_destinatie_pachet(pachet)==destinatie:
+            nr +=1
+    return nr

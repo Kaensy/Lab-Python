@@ -5,7 +5,7 @@ from domain.pachet import creeaza_pachet, get_datainceput_pachet, get_datasfarsi
     get_pret_pachet, set_datainceput_pachet, set_datasfarsit_pachet, set_destinatie_pachet, set_pret_pachet, \
     egal_pachete
 from infrastructura.repository_persoane import numar_pachete_lista, adauga_pachet_lista, get_all_pachete, \
-    creeare_lista_interval, creeare_lista_destinatie_pret, creeare_lista_datasfarsit
+    creeare_lista_interval, creeare_lista_destinatie_pret, creeare_lista_datasfarsit, nr_pachete_destinatie
 from validare.validator_pachet import valideaza_pachet
 
 
@@ -185,6 +185,22 @@ def ruleaza_teste_creare_lista_noua():
     creeare_lista_datasfarsit(pachete_datasfarsit,pachete,data_sfarsit_corecta_doi)
     assert (numar_pachete_service(pachete_datasfarsit) == 2)
 
+def ruleaza_teste_rapoarte():
+    pachete = []
+    data_inceput_unu = date(2022, 12, 12)
+    data_sfarsit_unu = date(2023, 1, 12)
+    destinatie = "Cluj"
+    pret_unu = int(30)
+    assert (nr_pachete_destinatie(pachete, destinatie)==0)
+    adauga_pachet_service(pachete, data_inceput_unu, data_sfarsit_unu, destinatie, pret_unu)
+    assert (nr_pachete_destinatie(pachete, destinatie)==1)
+
+    data_inceput_doi = date(2023, 5, 5)
+    data_sfarsit_doi = date(2023, 6, 6)
+    pret_doi = int(55)
+    adauga_pachet_service(pachete, data_inceput_doi, data_sfarsit_doi, destinatie, pret_unu)
+    assert (nr_pachete_destinatie(pachete, destinatie)==2)
+
 def ruleaza_toate_testele():
     ruleaza_teste_pachet()
     print("teste pachet trecute cu success poggers!")
@@ -198,4 +214,5 @@ def ruleaza_toate_testele():
     print("teste service trecute cu success")
     ruleaza_teste_creare_lista_noua()
     print("teste cautare trecute cu success")
-
+    ruleaza_teste_rapoarte()
+    print("teste rapoarte trecute cu success")

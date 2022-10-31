@@ -4,24 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a365bc54-8db0-4b2a-a703-c8fc98900d47" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../Lab4-6_Turism/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab4-6_Turism/.idea/Lab4-6_Turism.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab4-6_Turism/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab4-6_Turism/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab4-6_Turism/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab4-6_Turism/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab4-6_Turism/business/service_pachete.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab4-6_Turism/domain/pachet.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab4-6_Turism/infrastructura/repository_persoane.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab4-6_Turism/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab4-6_Turism/prezentare/ui.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab4-6_Turism/testare/teste.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab4-6_Turism/validare/validator_pachet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/lab_3.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/lab_3.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab3_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/lab3_test.py" afterDir="false" />
-    </list>
+    <list default="true" id="a365bc54-8db0-4b2a-a703-c8fc98900d47" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -50,7 +33,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/mihai/Documents/GitHub/Lab-Python/tema_lab_2",
+    "last_opened_file_path": "C:/Users/mihai/Documents/GitHub/Lab-Python/Lab4-6_Turism",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
