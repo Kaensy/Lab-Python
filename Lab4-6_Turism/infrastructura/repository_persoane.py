@@ -1,5 +1,5 @@
-from domain.pachet import egal_pachete, get_datainceput_pachet, get_datasfarsit_pachet, get_destinatie_pachet, \
-    get_pret_pachet
+from domain.pachet import egal_pachete, set_datainceput_pachet, set_datasfarsit_pachet, set_destinatie_pachet, \
+    set_pret_pachet
 
 
 def adauga_pachet_lista(l,pachet):
@@ -31,53 +31,26 @@ def get_all_pachete(l):
     """
     return l[:]
 
-def creeare_lista_interval(l_noua,l,data_inceput,data_sfarsit):
+def modificare_pachet(pachet, data_inceput, data_sfarsit, destinatie, pret):
     """
-    creeaza o noua lista l_noua formata din pachetele pachet din lista l care au ca data de inceput > data_inceput si data de sfarsit < data_sfarsit
-    :param l_noua: list
-    :param l: lista de pachete unice
+    modifica valorile pachetului pachet cu noile valori data_inceput, data_sfarsit, destinatie, pret
+    :param pachet: pachet
     :param data_inceput: date
     :param data_sfarsit: date
-    :return: - ( l_noua = l U pachete din lista l din intervalul data_inceput - data_sfarsit )
-    """
-    for pachet in l:
-        if get_datainceput_pachet(pachet)>=data_inceput and get_datasfarsit_pachet(pachet)<=data_sfarsit:
-            l_noua.append(pachet)
-
-def creeare_lista_destinatie_pret(l_noua,l,destinatie,pret):
-    """
-    creeaza o noua lista l_noua formata din pachetele pachet din lista l care au destinatia destinatie si pretul mai mic decat pret
-    :param l_noua: lista
-    :param l: lista de pachete unice
     :param destinatie: string
-    :param pret: integer
-    :return: - ( l_noua = l U pachetele din lista l cu destinatia destinatie si pretul < pret )
+    :param pret: int
+    :return: - ( modifica valorile unui pachet )
     """
-    for pachet in l:
-        if get_destinatie_pachet(pachet)==destinatie and get_pret_pachet(pachet)<pret:
-            l_noua.append(pachet)
+    set_datainceput_pachet(pachet, data_inceput)
+    set_datasfarsit_pachet(pachet, data_sfarsit)
+    set_destinatie_pachet(pachet, destinatie)
+    set_pret_pachet(pachet, pret)
 
-def creeare_lista_datasfarsit(l_noua,l,data_sfarsit):
+def stergere_pachet_index(pachete,index):
     """
-    creeaza o noua lista l_noua formata din pachetele pachet din lista l care au data de sfarsit lafel ca data_sfarsit
-    :param l_noua: lista
-    :param l: lista de pachete unice
-    :param data_sfarsit: date
-    :return: - ( l_noua = l U pachetele din lista l cu data de sfarsit = data_sfarsit )
+    sterge pachetul cu index index din lista de pachete pachete
+    :param pachete: list de pachete unice
+    :param index: int
+    :return: - ( sterge pachetul de index index din lista de pachete )
     """
-    for pachet in l:
-        if get_datasfarsit_pachet(pachet)==data_sfarsit:
-            l_noua.append(pachet)
-
-def nr_pachete_destinatie(l,destinatie):
-    """
-    returneaza numarul de pachete pachet cu destinatia identica cu destinatie
-    :param l: lista de pachete unice
-    :param destinatie: string
-    :return: rez - int : numarul de pachete pachet cu destinatia destinatie == destinatie
-    """
-    nr = int(0)
-    for pachet in l:
-        if get_destinatie_pachet(pachet)==destinatie:
-            nr +=1
-    return nr
+    del pachete[index]

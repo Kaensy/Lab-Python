@@ -1,11 +1,14 @@
 from datetime import date
 
-from business.service_pachete import numar_pachete_service, adauga_pachet_service
+from business.service_pachete import numar_pachete_service, adauga_pachet_service, creeare_lista_interval_service, \
+    creeare_lista_destinatie_pret_service, creeare_lista_datasfarsit_service, nr_pachete_destinatie_service, \
+    creeare_lista_interval_crescator_service, medie_pret_destinatie_service, modificare_pachet_service, \
+    stergere_destinatie_pachete_service, stergere_durata_pachete_service, stergere_pret_pachete_service
 from domain.pachet import creeaza_pachet, get_datainceput_pachet, get_datasfarsit_pachet, get_destinatie_pachet, \
     get_pret_pachet, set_datainceput_pachet, set_datasfarsit_pachet, set_destinatie_pachet, set_pret_pachet, \
     egal_pachete
 from infrastructura.repository_persoane import numar_pachete_lista, adauga_pachet_lista, get_all_pachete, \
-    creeare_lista_interval, creeare_lista_destinatie_pret, creeare_lista_datasfarsit, nr_pachete_destinatie
+    modificare_pachet, stergere_pachet_index
 from validare.validator_pachet import valideaza_pachet
 
 
@@ -73,26 +76,39 @@ def ruleaza_teste_repository_pachete():
     data_sfarsit = date(2023, 10, 15)
     destinatie = "Kolozsvar"
     pret = int(25)
-    pachet = creeaza_pachet(data_inceput,data_sfarsit,destinatie,pret)
-    assert (numar_pachete_lista(pachete)==0)
-    adauga_pachet_lista(pachete,pachet)
-    assert (numar_pachete_lista(pachete)==1)
+    pachet = creeaza_pachet(data_inceput, data_sfarsit, destinatie, pret)
+    assert (numar_pachete_lista(pachete) == 0)
+    adauga_pachet_lista(pachete, pachet)
+    assert (numar_pachete_lista(pachete) == 1)
 
     data_inceput_acelasi = date(2023, 10, 11)
     data_sfarsit_acelasi = date(2023, 10, 15)
     destinatie_acelasi = "Kolozsvar"
     pret_acelasi = int(25)
-    pachet_acelasi = creeaza_pachet(data_inceput_acelasi,data_sfarsit_acelasi,destinatie_acelasi,pret_acelasi)
+    pachet_acelasi = creeaza_pachet(data_inceput_acelasi, data_sfarsit_acelasi, destinatie_acelasi, pret_acelasi)
     try:
-        adauga_pachet_lista(pachete,pachet_acelasi)
+        adauga_pachet_lista(pachete, pachet_acelasi)
         assert False
     except ValueError as ve:
-        assert(str(ve)=="pachet invalid!\n")
-    assert (numar_pachete_lista(pachete)==1)
+        assert(str(ve) == "pachet invalid!\n")
+    assert (numar_pachete_lista(pachete) == 1)
 
     lista_pachete = get_all_pachete(pachete)
-    assert(len(lista_pachete)==1)
+    assert(len(lista_pachete) == 1)
     assert (get_destinatie_pachet(lista_pachete[0]) == get_destinatie_pachet(pachet))
+
+    data_inceput_noua = date(2024, 12, 12)
+    data_sfarsit_noua = date(2025, 1, 1)
+    destinatie_noua = "Cluj"
+    pret_nou = int(50)
+    modificare_pachet(lista_pachete[0], data_inceput_noua, data_sfarsit_noua, destinatie_noua, pret_nou)
+    assert (get_datainceput_pachet(lista_pachete[0]) == data_inceput_noua)
+    assert (get_datasfarsit_pachet(lista_pachete[0]) == data_sfarsit_noua)
+    assert (get_destinatie_pachet(lista_pachete[0]) == destinatie_noua)
+    assert (get_pret_pachet(lista_pachete[0]) == pret_nou)
+
+    stergere_pachet_index(lista_pachete, 0)
+    assert (len(lista_pachete) == 0)
 
 def ruleaza_teste_service_pachete():
     pachete = []
@@ -129,6 +145,62 @@ def ruleaza_teste_service_pachete():
 
     assert (numar_pachete_service(pachete)==1)
 
+    data_inceput_noua = date(2024, 12, 12)
+    data_sfarsit_noua = date(2025, 1, 1)
+    destinatie_noua = "Cluj"
+    pret_nou = int(50)
+    modificare_pachet_service(pachete[0], data_inceput_noua, data_sfarsit_noua, destinatie_noua, pret_nou)
+    assert (get_datainceput_pachet(pachete[0]) == data_inceput_noua)
+    assert (get_datasfarsit_pachet(pachete[0]) == data_sfarsit_noua)
+    assert (get_destinatie_pachet(pachete[0]) == destinatie_noua)
+    assert (get_pret_pachet(pachete[0]) == pret_nou)
+
+    data_inceput_gresita = date(2021, 10, 11)
+    data_sfarsit_gresita = date(2020, 10, 15)
+    destinatie_gresita = ""
+    pret_gresit = int(-1)
+    try:
+        modificare_pachet_service(pachete[0], data_inceput_gresita, data_sfarsit_gresita, destinatie_gresita, pret_gresit)
+        assert False
+    except ValueError as ve:
+        assert (str(ve) == "data_inceput invalida!\ndata_sfarsit invalida!\ndestinatie invalida!\npret invalid!\n")
+
+    lista_pachete = []
+    data_inceput_unu = date(2023, 12, 12)
+    data_sfarsit_unu = date(2024, 1, 1)
+    destinatie_unu = "Cluj"
+    pret_unu = int(50)
+
+    data_inceput_doi = date(2023, 12, 12)
+    data_sfarsit_doi = date(2023, 12, 15)
+    destinatie_doi = "Cluj"
+    pret_doi = int(75)
+
+    data_inceput_trei = date(2024, 1, 1)
+    data_sfarsit_trei = date(2024, 1, 5)
+    destinatie_trei = "Dej"
+    pret_trei = int(15)
+
+    adauga_pachet_service(lista_pachete, data_inceput_unu, data_sfarsit_unu, destinatie_unu, pret_unu)
+    adauga_pachet_service(lista_pachete, data_inceput_doi, data_sfarsit_doi, destinatie_doi, pret_doi)
+    adauga_pachet_service(lista_pachete, data_inceput_trei, data_sfarsit_trei, destinatie_trei, pret_trei)
+
+    assert (numar_pachete_service(lista_pachete) == 3)
+    stergere_destinatie_pachete_service(lista_pachete, "Dincolo")
+    assert (numar_pachete_service(lista_pachete) == 3)
+    stergere_durata_pachete_service(lista_pachete,1)
+    assert (numar_pachete_service(lista_pachete) == 3)
+    stergere_pret_pachete_service(lista_pachete,100)
+    assert (numar_pachete_service(lista_pachete) == 3)
+
+    stergere_destinatie_pachete_service(lista_pachete, destinatie_trei)
+    assert (numar_pachete_service(lista_pachete) == 2)
+    stergere_durata_pachete_service(lista_pachete, 4)
+    assert (numar_pachete_service(lista_pachete) == 1)
+    stergere_pret_pachete_service(lista_pachete, 40)
+    assert (numar_pachete_service(lista_pachete) == 0)
+
+
 def ruleaza_teste_creare_lista_noua():
     pachete=[]
     pachete_interval=[]
@@ -147,12 +219,12 @@ def ruleaza_teste_creare_lista_noua():
     data_inceput_interval_gresit = date(2024, 1, 1)
     data_sfarsit_interval_gresit = date(2025, 12, 12)
     assert (numar_pachete_service(pachete_interval)==0)
-    creeare_lista_interval(pachete_interval,pachete,data_inceput_interval_gresit,data_sfarsit_interval_gresit)
+    creeare_lista_interval_service(pachete_interval,pachete,data_inceput_interval_gresit,data_sfarsit_interval_gresit)
     assert (numar_pachete_service(pachete_interval)==0)
 
     data_inceput_interval_corect = date(2022, 1, 1)
     data_sfarsit_interval_corect = date(2024, 12, 12)
-    creeare_lista_interval(pachete_interval,pachete,data_inceput_interval_corect,data_sfarsit_interval_corect)
+    creeare_lista_interval_service(pachete_interval,pachete,data_inceput_interval_corect,data_sfarsit_interval_corect)
     assert (numar_pachete_service(pachete_interval)==2)
     # ^^^ Testare cautare dupa Interval
 
@@ -160,29 +232,29 @@ def ruleaza_teste_creare_lista_noua():
 
     destinatie_cautata_corecta = "Kolozsvar"
     pret_cautat_corect = 100
-    creeare_lista_destinatie_pret(pachete_destinatie_pret,pachete,destinatie_cautata_corecta,pret_cautat_corect)
+    creeare_lista_destinatie_pret_service(pachete_destinatie_pret,pachete,destinatie_cautata_corecta,pret_cautat_corect)
     assert(numar_pachete_service(pachete_destinatie_pret)==1)
     destinatie_cautata_gresita = "Florestini"
     pret_cautat_gresit = 1
-    creeare_lista_destinatie_pret(pachete_destinatie_pret,pachete,destinatie_cautata_gresita,pret_cautat_corect)
+    creeare_lista_destinatie_pret_service(pachete_destinatie_pret,pachete,destinatie_cautata_gresita,pret_cautat_corect)
     assert (numar_pachete_service(pachete_destinatie_pret) == 1)
-    creeare_lista_destinatie_pret(pachete_destinatie_pret,pachete,destinatie_cautata_corecta,pret_cautat_gresit)
+    creeare_lista_destinatie_pret_service(pachete_destinatie_pret,pachete,destinatie_cautata_corecta,pret_cautat_gresit)
     assert (numar_pachete_service(pachete_destinatie_pret) == 1)
     destinatie_cautata_corecta_doi = "Kolozsvar2"
-    creeare_lista_destinatie_pret(pachete_destinatie_pret,pachete,destinatie_cautata_corecta_doi,pret_cautat_corect)
+    creeare_lista_destinatie_pret_service(pachete_destinatie_pret,pachete,destinatie_cautata_corecta_doi,pret_cautat_corect)
     assert (numar_pachete_service(pachete_destinatie_pret) == 2)
     # ^^^ Testare cautare dupa Destinatie - Pret
 
     pachete_datasfarsit = []
 
     data_sfarsit_corecta = date(2023, 10, 15)
-    creeare_lista_datasfarsit(pachete_datasfarsit,pachete,data_sfarsit_corecta)
+    creeare_lista_datasfarsit_service(pachete_datasfarsit,pachete,data_sfarsit_corecta)
     assert (numar_pachete_service(pachete_datasfarsit) == 1)
     data_sfarsit_gresita = date(2030, 12, 12)
-    creeare_lista_datasfarsit(pachete_datasfarsit,pachete,data_sfarsit_gresita)
+    creeare_lista_datasfarsit_service(pachete_datasfarsit,pachete,data_sfarsit_gresita)
     assert (numar_pachete_service(pachete_datasfarsit) == 1)
     data_sfarsit_corecta_doi = date(2023, 10, 16)
-    creeare_lista_datasfarsit(pachete_datasfarsit,pachete,data_sfarsit_corecta_doi)
+    creeare_lista_datasfarsit_service(pachete_datasfarsit,pachete,data_sfarsit_corecta_doi)
     assert (numar_pachete_service(pachete_datasfarsit) == 2)
 
 def ruleaza_teste_rapoarte():
@@ -191,15 +263,31 @@ def ruleaza_teste_rapoarte():
     data_sfarsit_unu = date(2023, 1, 12)
     destinatie = "Cluj"
     pret_unu = int(30)
-    assert (nr_pachete_destinatie(pachete, destinatie)==0)
+    assert (nr_pachete_destinatie_service(pachete, destinatie)==0)
     adauga_pachet_service(pachete, data_inceput_unu, data_sfarsit_unu, destinatie, pret_unu)
-    assert (nr_pachete_destinatie(pachete, destinatie)==1)
+    assert (nr_pachete_destinatie_service(pachete, destinatie)==1)
 
     data_inceput_doi = date(2023, 5, 5)
     data_sfarsit_doi = date(2023, 6, 6)
-    pret_doi = int(55)
-    adauga_pachet_service(pachete, data_inceput_doi, data_sfarsit_doi, destinatie, pret_unu)
-    assert (nr_pachete_destinatie(pachete, destinatie)==2)
+    pret_doi = int(50)
+    adauga_pachet_service(pachete, data_inceput_doi, data_sfarsit_doi, destinatie, pret_doi)
+    assert (nr_pachete_destinatie_service(pachete, destinatie)==2)
+
+    interval_inceput_unu = date(2022, 12, 15)
+    interval_sfarsit = date(2023, 8, 8)
+    interval_inceput_doi = date(2022, 11, 11)
+    lista_cautata = creeare_lista_interval_crescator_service(pachete, interval_inceput_unu, interval_sfarsit)
+    assert (numar_pachete_service(lista_cautata) == 1)
+    lista_cautata = creeare_lista_interval_crescator_service(pachete, interval_inceput_doi, interval_sfarsit)
+    assert (numar_pachete_service(lista_cautata) == 2)
+
+    destinatie_inexistenta = "Dincolo"
+    medie_pret = medie_pret_destinatie_service(pachete, destinatie_inexistenta)
+    assert (medie_pret == 0)
+    medie_pret = medie_pret_destinatie_service(pachete, destinatie)
+    assert (medie_pret == 40)
+
+
 
 def ruleaza_toate_testele():
     ruleaza_teste_pachet()
