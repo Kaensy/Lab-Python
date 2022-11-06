@@ -15,14 +15,13 @@ def valideaza_pachet(pachet):
                        si seteaza mesajul erorii ValueError la concatenarea de stringuri obtinuta
     """
     erori=""
-    if get_datainceput_pachet(pachet)< datetime.date.today():
+    if get_datainceput_pachet(pachet) < datetime.date.today():
         erori += "data_inceput invalida!\n"
-    if get_datasfarsit_pachet(pachet)<get_datainceput_pachet(pachet):
+    if get_datasfarsit_pachet(pachet) < get_datainceput_pachet(pachet):
         erori += "data_sfarsit invalida!\n"
-    if get_destinatie_pachet(pachet)=="":
+    if get_destinatie_pachet(pachet) == "":
         erori += "destinatie invalida!\n"
-    if get_pret_pachet(pachet)<0:
+    if get_pret_pachet(pachet) < 0:
         erori += "pret invalid!\n"
     if len(erori)>0:
         raise ValueError(erori)
-

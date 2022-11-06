@@ -2,7 +2,7 @@ from domain.pachet import egal_pachete, set_datainceput_pachet, set_datasfarsit_
     set_pret_pachet
 
 
-def adauga_pachet_lista(l,pachet):
+def adauga_pachet_lista(l,undo, pachet):
     """
     adauga la lista l de pachete unice pachetul pachet daca pachet nu apare deja in lista l
     :param l: lista de pachete unice
@@ -10,10 +10,24 @@ def adauga_pachet_lista(l,pachet):
     :return: - ( l' = l U {pachet} , daca pachetul pachet nu apare in lista l
     :raise: ValueError cu mesajul string "pachet invalid!\n" daca pachetul pachet apare deja in lista l
     """
-    for _pachet in l:
-        if egal_pachete(_pachet,pachet):
+    for key in l:
+        if egal_pachete(l[key], pachet):
             raise ValueError("pachet invalid!\n")
-    l.append(pachet)
+    nr = numar_pachete_lista(l)+1
+    l[nr] = pachet
+    undo.append(lambda:stergere_pachet_index(l,nr))
+
+
+def adauga_pachet_lista_faraundo(l, pachet):
+    """
+    adauga la lista l de pachete unice pachetul pachet daca pachet nu apare deja in lista l
+    :param l: lista de pachete unice
+    :param pachet: pachet
+    :return: - ( l' = l U {pachet} , daca pachetul pachet nu apare in lista l
+    :raise: ValueError cu mesajul string "pachet invalid!\n" daca pachetul pachet apare deja in lista l
+    """
+    nr = numar_pachete_lista(l)+1
+    l[nr] = pachet
 
 def numar_pachete_lista(l):
     """
@@ -29,7 +43,7 @@ def get_all_pachete(l):
     :param l: lista l de pachete pachet unice
     :return: l' = l[:]
     """
-    return l[:]
+    return l
 
 def modificare_pachet(pachet, data_inceput, data_sfarsit, destinatie, pret):
     """
@@ -53,4 +67,4 @@ def stergere_pachet_index(pachete,index):
     :param index: int
     :return: - ( sterge pachetul de index index din lista de pachete )
     """
-    del pachete[index]
+    pachete.pop(index)
