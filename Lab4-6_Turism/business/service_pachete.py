@@ -1,6 +1,6 @@
 from domain.pachet import creeaza_pachet, get_datainceput_pachet, get_datasfarsit_pachet, get_destinatie_pachet, \
     get_pret_pachet
-from infrastructura.repository_persoane import adauga_pachet_lista, get_all_pachete, modificare_pachet, \
+from infrastructura.repository_persoane import adauga_pachet_lista, modificare_pachet, \
     stergere_pachet_index, adauga_pachet_lista_faraundo
 from validare.validator_pachet import valideaza_pachet
 
@@ -8,15 +8,15 @@ from validare.validator_pachet import valideaza_pachet
 def adauga_pachet_service(l, undo, data_inceput, data_sfarsit, destinatie, pret):
     """
     creaza un pachet pe baza date-ului data_inceput, a date-ului data_sfarsit, a string-ului destinatie si a intregului pret
-    valideaza pachetul creat si daca e valid il adauga in lista de pachete unice l doar daca pachetul nu apare deja in lista l
-    :param l: lista
+    valideaza pachetul creat si daca e valid il adauga in dictionarul de pachete unice l doar daca pachetul nu apare deja in dictionarul l
+    :param l: dictionar
     :param data_inceput: date
     :param data_sfarsit: date
     :param destinatie: string
     :param pret: int
     :return: - ( l' = l U pachet - daca validarea si adaugarea pachetului se face cu success )
     :raises: ValueError cu mesajele de validare daca pachetul creat e invalid
-                        cu mesajul "pachet invalid!\n" daca pachetul exista deja in lista l
+                        cu mesajul "pachet invalid!\n" daca pachetul exista deja in dictionarul l
     """
     pachet = creeaza_pachet(data_inceput, data_sfarsit, destinatie, pret)
     valideaza_pachet(pachet)
@@ -24,20 +24,20 @@ def adauga_pachet_service(l, undo, data_inceput, data_sfarsit, destinatie, pret)
 
 def numar_pachete_service(l):
     """
-    returneaza numarul de pachete pachet din lista l de pachete unice
-    :param l: lista
+    returneaza numarul de pachete pachet din dictionarul l de pachete unice
+    :param l: dictionar
     :return: rez - int : nr de pachete unice din lista l
     """
     return len(l)
 
 def creeare_lista_interval_service(l_noua, l, data_inceput, data_sfarsit):
     """
-    creeaza o noua lista l_noua formata din pachetele pachet din lista l care au ca data de inceput > data_inceput si data de sfarsit < data_sfarsit
-    :param l_noua: list
-    :param l: lista de pachete unice
+    creeaza un nou dictionar l_noua format din pachetele pachet din dictionarul l care au ca data de inceput > data_inceput si data de sfarsit < data_sfarsit
+    :param l_noua: dictionar
+    :param l: dictionar de pachete unice
     :param data_inceput: date
     :param data_sfarsit: date
-    :return: - ( l_noua = l U pachete din lista l din intervalul data_inceput - data_sfarsit )
+    :return: - ( l_noua = l U pachete din dictionarul l din intervalul data_inceput - data_sfarsit )
     """
     for key in l:
         if get_datainceput_pachet(l[key]) >= data_inceput and get_datasfarsit_pachet(l[key]) <= data_sfarsit:
@@ -45,12 +45,12 @@ def creeare_lista_interval_service(l_noua, l, data_inceput, data_sfarsit):
 
 def creeare_lista_destinatie_pret_service(l_noua,l , destinatie,pret):
     """
-    creeaza o noua lista l_noua formata din pachetele pachet din lista l care au destinatia destinatie si pretul mai mic decat pret
-    :param l_noua: lista
-    :param l: lista de pachete unice
+    creeaza un nou dictionar l_noua formata din pachetele pachet din dictionarul l care au destinatia destinatie si pretul mai mic decat pret
+    :param l_noua: dictionar
+    :param l: dictionar de pachete unice
     :param destinatie: string
     :param pret: integer
-    :return: - ( l_noua = l U pachetele din lista l cu destinatia destinatie si pretul < pret )
+    :return: - ( l_noua = l U pachetele din dictionarul l cu destinatia destinatie si pretul < pret )
     """
     for key in l:
         if get_destinatie_pachet(l[key]) == destinatie and get_pret_pachet(l[key]) < pret:
@@ -58,11 +58,11 @@ def creeare_lista_destinatie_pret_service(l_noua,l , destinatie,pret):
 
 def creeare_lista_datasfarsit_service(l_noua, l, data_sfarsit):
     """
-    creeaza o noua lista l_noua formata din pachetele pachet din lista l care au data de sfarsit lafel ca data_sfarsit
-    :param l_noua: lista
-    :param l: lista de pachete unice
+    creeaza un nou dictionar l_noua formata din pachetele pachet din dictionarul l care au data de sfarsit lafel ca data_sfarsit
+    :param l_noua: dictionar
+    :param l: dictionar de pachete unice
     :param data_sfarsit: date
-    :return: - ( l_noua = l U pachetele din lista l cu data de sfarsit = data_sfarsit )
+    :return: - ( l_noua = l U pachetele din dictionarul l cu data de sfarsit = data_sfarsit )
     """
     for key in l:
         if get_datasfarsit_pachet(l[key]) == data_sfarsit:
@@ -70,8 +70,8 @@ def creeare_lista_datasfarsit_service(l_noua, l, data_sfarsit):
 
 def nr_pachete_destinatie_service(l, destinatie):
     """
-    returneaza numarul de pachete pachet cu destinatia identica cu destinatie
-    :param l: lista de pachete unice
+    returneaza numarul de pachete pachet cu destinatia identica cu destinatie din dictionarul l
+    :param l: dictionar de pachete unice
     :param destinatie: string
     :return: rez - int : numarul de pachete pachet cu destinatia destinatie == destinatie
     """
@@ -84,7 +84,7 @@ def nr_pachete_destinatie_service(l, destinatie):
 def creeare_lista_interval_crescator_service(l, data_inceput, data_sfarsit):
     """
     returneaza dictionarul cu pachetele din intervalul data_inceput -> data_sfarsit din dictionarul l ordonate crescator dupa pret
-    :param l: lista de pachete unice
+    :param l: dictionar de pachete unice
     :param data_inceput: date
     :param data_sfarsit: date
     :return:
@@ -97,10 +97,10 @@ def creeare_lista_interval_crescator_service(l, data_inceput, data_sfarsit):
 
 def medie_pret_destinatie_service(l, destinatie):
     """
-    returneaza media de pret int a pachetelor cu destinatia destinatie din lista de pachete l
-    :param l: lista de pachete unice
+    returneaza media de pret int a pachetelor cu destinatia destinatie din dictionarul de pachete l
+    :param l: dictionar de pachete unice
     :param destinatie: string
-    :return: rez - int : media preturilor pret a pachetelor cu destinatia destinatie din lista
+    :return: rez - int : media preturilor pret a pachetelor cu destinatia destinatie din dictionar
     """
     medie = 0
     nr_pachete = nr_pachete_destinatie_service(l, destinatie)
@@ -162,10 +162,10 @@ def get_pret_pachet_service(pachet):
 
 def stergere_destinatie_pachete_service(pachete, undo, destinatie):
     """
-    sterge toate pachetele de tip pachet din lista pachete cu destinatia destinatie
-    :param pachete: lista de pachete unice
+    sterge toate pachetele de tip pachet din dictionarul pachete cu destinatia destinatie
+    :param pachete: dictionar de pachete unice
     :param destinatie: string
-    :return: - ( sterge toate pachetele cu destinatia destinatie din lista pachete )
+    :return: - ( sterge toate pachetele cu destinatia destinatie din dictionarul pachete )
     """
     indexi = []
     for key in pachete:
@@ -177,10 +177,10 @@ def stergere_destinatie_pachete_service(pachete, undo, destinatie):
 
 def stergere_durata_pachete_service(pachete, undo, durata):
     """
-    sterge toate pachetele de tip pachet din lista pachete care au un interval mai mic decat durata
-    :param pachete: lista de pachete unice
+    sterge toate pachetele de tip pachet din dictionarul pachete care au un interval mai mic decat durata
+    :param pachete: dictionar de pachete unice
     :param durata: integer
-    :return: - ( sterge toate pachetele de tip pachet din lista pachete care au data_sfarsit - data_inceput < durata )
+    :return: - ( sterge toate pachetele de tip pachet din dictionarul pachete care au data_sfarsit - data_inceput < durata )
     """
     indexi = []
     for key in pachete:
@@ -191,10 +191,10 @@ def stergere_durata_pachete_service(pachete, undo, durata):
         stergere_pachet_index(pachete, i)
 def stergere_pret_pachete_service(pachete, undo, pret):
     """
-    sterge toate pachetele de tip pachet din lista pachete care au pretul mai mare decat pret
-    :param pachete: lista de pachete unice
+    sterge toate pachetele de tip pachet din dictionarul pachete care au pretul mai mare decat pret
+    :param pachete: dictionar de pachete unice
     :param pret: integer
-    :return: - ( sterge toate pachetele pachet din lista pachete care au pretul pret > pret
+    :return: - ( sterge toate pachetele pachet din dictionarul pachete care au pretul pret > pret
     """
     indexi = []
     for key in pachete:

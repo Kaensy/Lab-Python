@@ -28,59 +28,65 @@ def print_pachet_fara_index_ui(l):
 def run_ui():
     pachete = {}
     undo = []
-    interfata_baza = """
+    interfata_baza = """---------------------MENIU---------------------
 1.Adaugare
 2.Stergere 
 3.Cautare 
 4.Rapoarte 
 5.Filtrare
-6.Undo ( x )
+6.Undo 
 7.Exit 
-8.Tiparire Lista Pachete"""
-    interfata_adaugare = """
+8.Tiparire Lista Pachete
+-----------------------------------------------"""
+    interfata_adaugare = """-------------------ADAUGARE--------------------
 1.Adauga pachet de calatorie
 2.Modifica pachet de calatorie 
-3.Inapoi"""
-    interfata_modificare ="""
+3.Inapoi
+-----------------------------------------------"""
+    interfata_modificare = """-------------------MODIFICARE-------------------
 1.Data de inceput
 2.Data de sfarsit
 3.Destinatie
 4.Pret"""
-    interfata_alegere ="""
+    interfata_alegere = """-----------------------------------------------
 1.Da
-2.Nu"""
-    interfata_stergere ="""
+2.Nu
+-----------------------------------------------"""
+    interfata_stergere = """-------------------STERGERE--------------------
 1.Sterge toate pachetele dintr-o destinatie
 2.Sterge toate pachetele cu o durata mai scurta decat o valoare introdusa
 3.Sterge toate pachetele cu un pret mai mare decat un pret introdus
-4.Inapoi"""
-    interfata_cautare = """
+4.Inapoi
+-----------------------------------------------"""
+    interfata_cautare = """-------------------CAUTARE---------------------
 1.Tiparirea pachetelor dintr-un interval
 2.Tiparirea pachetelor dintr-o locatie si cu pret mai mic decat o suma 
 3.Tiparirea pachetelor cu o anumita data de sfarsit 
-4.Inapoi"""
-    interfata_filtrare = """
+4.Inapoi
+-----------------------------------------------"""
+    interfata_filtrare = """------------------FILTRARE--------------------
 1.Filtrare dupa Pret Maxim si o Destinatie
 2.Filtrare pachete care nu apar intr-o luna
-3.Inapoi"""
-    interfata_filtrare_cautare = """
+3.Inapoi
+-----------------------------------------------"""
+    interfata_filtrare_cautare = """------------------FILTRARE---------------------
 1.Filtrare dupa Pret Maxim si o Destinatie
 2.Filtrare pachete care nu apar intr-o luna
 3.Undo
-4.Inapoi"""
-    interfata_rapoarte = """
+4.Inapoi
+-----------------------------------------------"""
+    interfata_rapoarte = """------------------RAPOARTE---------------------
 1.Nr pachete pentru o destinatie
 2.Pachete dintr-o perioada ordonate crescator 
 3.Media de pret pentru o destinatie 
-4.Inapoi"""
+4.Inapoi
+-----------------------------------------------"""
     while True:
         print(interfata_baza)
         command = input(">>>")
         command = command.strip()
         if command == "":
             continue
-        elif command == "exit":
-            return
         elif command == "1":
             while command:
                 print(interfata_adaugare)
@@ -112,9 +118,9 @@ def run_ui():
                             print("Ce doriti sa modificati")
                             print(interfata_modificare)
                             if schimbare:
-                                print("5.Terminat\n6.Inapoi")
+                                print("5.Terminat\n6.Inapoi\n-----------------------------------------------")
                             else:
-                                print("5.Inapoi")
+                                print("5.Inapoi\n-----------------------------------------------")
                             modificare = input(">>>")
                             if modificare == "1":
                                 data_inceput_mod = input("Data inceput noua : ")
@@ -379,5 +385,7 @@ def run_ui():
                 print("Lista goala")
         elif command == "7":
             return
+        elif command == "69":
+            print("Nice")
         else:
             print("Comanda invalida")
