@@ -14,6 +14,8 @@ def adauga_pachet_lista(l,undo, pachet):
         if egal_pachete(l[key], pachet):
             raise ValueError("pachet invalid!\n")
     nr = numar_pachete_lista(l)+1
+    if nr in l:
+        nr +=1
     l[nr] = pachet
     undo.append(lambda:stergere_pachet_index(l,nr))
 

@@ -25,9 +25,143 @@ def print_pachet_ui(l):
 def print_pachet_fara_index_ui(l):
     for key in l:
         print(to_string_pachet(l[key]))
+
+def adaugare(pachete, undo, params):
+    try:
+        adauga_persoane_ui(pachete, undo, params)
+    except ValueError as ve:
+        print(ve)
+
+def stergere(pachete, undo, params):
+    if params[0] == "1":
+        if not params[1]:
+            print("Destinatie invalida")
+        else:
+            stergere_destinatie_pachete_service(pachete, undo, params[1])
+    elif params[0] == "2":
+        if not (params[1].isdigit() and int(params[1]) > 0):
+            print("Durata invalida")
+        else:
+            stergere_durata_pachete_service(pachete, undo, int(params[1]))
+    elif params[0] == "3":
+        if not (params[1].isdigit() and int(params[1]) > -1):
+            print("Pret invalid")
+        else:
+            stergere_pret_pachete_service(pachete, undo, int(params[1]))
+
+def print_pachete(l, undo, params):
+    for key, value in l.items():
+        print(key, to_string_pachet(value))
+
+def cautare(pachete, undo, params):
+        if params[0] == "1":
+            lista_cautata = {}
+            if len(params) == 7:
+                data_inceput_interval = date(int(params[3]), int(params[2]), int(params[1]))
+                data_sfarsit_interval = date(int(params[6]), int(params[5]), int(params[4]))
+                creeare_lista_interval_service(lista_cautata, pachete, data_inceput_interval, data_sfarsit_interval)
+                try:
+                    print_pachet_ui(lista_cautata)
+                except ValueError as ve:
+                    print(ve)
+                if not lista_cautata:
+                    print("Nu sa gasit niciun pachet")
+            else:
+                print("Interval Invalid ")
+        elif params[0] == "2":
+            lista_cautata = {}
+            if len(params) == 3 and params[2].isdigit():
+                destinatie_cautata = str(params[1])
+                pret_cautat = int(params[2])
+                creeare_lista_destinatie_pret_service(lista_cautata, pachete, destinatie_cautata, pret_cautat)
+                try:
+                    print_pachet_ui(lista_cautata)
+                except ValueError as ve:
+                    print(ve)
+                if not lista_cautata:
+                    print("Nu sa gasit niciun pachet")
+            elif len(params) != 3:
+                print("Nr parametrii invalid")
+            elif not (params[2].isdigit()):
+                print("Pret invalid")
+        elif params[0] == "3":
+            lista_cautata = {}
+            data_sfarsit_cautata = date(int(params[3]), int(params[2]), int(params[1]))
+            creeare_lista_datasfarsit_service(lista_cautata, pachete, data_sfarsit_cautata)
+            try:
+                print_pachet_ui(lista_cautata)
+            except ValueError as ve:
+                print(ve)
+            if not lista_cautata:
+                print("Nu sa gasit niciun pachet")
+
+def rapoarte(pachete, undo, params):
+    if params[0] == "1":
+        print(nr_pachete_destinatie_service(pachete, params[1]))
+    elif params[0] == "2":
+        if len(params) == 7:
+            data_inceput_interval = date(int(params[3]), int(params[2]), int(params[1]))
+            data_sfarsit_interval = date(int(params[6]), int(params[5]), int(params[4]))
+            lista_cautata = creeare_lista_interval_crescator_service(pachete, data_inceput_interval,data_sfarsit_interval)
+            try:
+                print_pachet_ui(lista_cautata)
+            except ValueError as ve:
+                print(ve)
+        else:
+            print("Interval Invalid ")
+    elif params[0] == "3":
+        medie = medie_pret_destinatie_service(pachete, params[1])
+        if medie:
+            print("Media preturilor din", params[1], "este de :", medie, "de lei")
+        else:
+            print("Nu exista nici un pachet disponibil pentru destinatia introdusa")
+
+def filtrare(pachete, undo, params):
+    if params[0] == "1":
+        if len(params) == 3 and params[1].isdigit():
+            pret_filtrare = int(params[1])
+            destinatie_filtrare = str(params[2])
+            filtrare_pret_destinatie(pachete, undo, pret_filtrare, destinatie_filtrare)
+            print_pachet_ui(pachete)
+        elif len(params) != 3:
+            print("Nr parametrii invalid")
+        elif not (params[1].isdigit()):
+            print("Pret invalid")
+    elif params[0] == "2":
+        if params[1].isdigit():
+            filtrare_luna(pachete, undo, int(params[1]))
+            print_pachet_ui(pachete)
+        else:
+            print("Luna invalida")
+
+def modificare_ui(pachete, undo, params):
+    data_inceput_noua = get_datainceput_pachet_service(pachete[int(params[0])])
+    data_sfarsit_noua = get_datasfarsit_pachet_service(pachete[int(params[0])])
+    destinatie_noua = get_destinatie_pachet_service(pachete[int(params[0])])
+    pret_nou = get_pret_pachet_service(pachete[int(params[0])])
+    data_inceput = date(int(params[3]), int(params[2]), int(params[1]))
+    data_sfarsit = date(int(params[6]), int(params[5]), int(params[4]))
+    destinatie = params[7]
+    pret = int(params[8])
+    undo.append(lambda: modificare_pachet_service(pachete[int(params[0])], data_inceput_noua, data_sfarsit_noua, destinatie_noua,pret_nou))
+    modificare_pachet_service(pachete[int(params[0])], data_inceput, data_sfarsit, destinatie, pret)
+
+def undo_ui(pachete, undo, params):
+    undoundo(pachete, undo)
+
 def run_ui():
     pachete = {}
     undo = []
+    comenzi = {
+        'Adaugare': adaugare,
+        'Stergere': stergere,
+        'Afisare': print_pachete,
+        'Cautare': cautare,
+        'Rapoarte': rapoarte,
+        'Filtrare': filtrare,
+        'Modificare': modificare_ui,
+        'Undo': undo_ui
+    }
     interfata_baza = """---------------------MENIU---------------------
 1.Adaugare
 2.Stergere 
@@ -81,7 +215,8 @@ def run_ui():
 3.Media de pret pentru o destinatie 
 4.Inapoi
 -----------------------------------------------"""
-    while True:
+    modalitate = input("1 - Optiuni\n2 - Linie de comanda\n")
+    while modalitate == "1":
         print(interfata_baza)
         command = input(">>>")
         command = command.strip()
@@ -385,7 +520,17 @@ def run_ui():
                 print("Lista goala")
         elif command == "7":
             return
-        elif command == "69":
-            print("Nice")
         else:
             print("Comanda invalida")
+    while modalitate == "2":
+        for keys in comenzi:
+            print(keys)
+        params = input(">>>")
+        params = params.split(" ")
+        while params[0] in comenzi:
+            comenzi[params[0]](pachete, undo, params[1:])
+            params = input(">>>")
+            params = params.split()
+            if params[0] == "Exit":
+                return
+
