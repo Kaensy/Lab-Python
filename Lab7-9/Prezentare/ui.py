@@ -1,6 +1,7 @@
 from Erori.repo_error import RepoError
 from Erori.validation_error import ValidError
 
+
 class UI:
 
     def __init__(self, service_studenti, service_materii, service_note):
@@ -8,19 +9,43 @@ class UI:
         self.__service_materii = service_materii
         self.__service_note = service_note
         self.__comenzi = {
-            "adauga_student":self.__ui_adauga_student,
-            "print_studenti":self.__ui_print_studenti,
-            "sterge_student":self.__ui_sterge_student_si_note,
+            "adauga_student": self.__ui_adauga_student,
+            "print_studenti": self.__ui_print_studenti,
+            "sterge_student": self.__ui_sterge_student_si_note,
             "modifica_student": self.__ui_modifica_student,
-            "sefi_promotie":self.__ui_sefi_promotie,
-            "adauga_materie":self.__ui_adauga_materie,
-            "print_materii":self.__ui_print_materii,
-            "sterge_materie":self.__ui_sterge_materie,
-            "modifica_materie":self.__ui_modifica_materie
-        }
+            "cauta_student": self.__ui_cauta_student,
+            "sefi_promotie": self.__ui_sefi_promotie,
+            "adauga_materie": self.__ui_adauga_materie,
+            "print_materii": self.__ui_print_materii,
+            "sterge_materie": self.__ui_sterge_materie,
+            "modifica_materie": self.__ui_modifica_materie,
+            "cauta_materie": self.__ui_cauta_materie,
+            "comenzi": self.__ui_afisare_comenzi
+            }
+
+    def __ui_afisare_comenzi(self):
+        if len(self.__params) != 0:
+            print("Numar parametri invalid!")
+            return
+        for comanda in self.__comenzi:
+            print(comanda)
+        print("exit")
+    def __ui_cauta_materie(self):
+        if len(self.__params) != 1:
+            print("Numar parametri invalid!")
+            return
+        id_materie = int(self.__params[0])
+        print(str(self.__service_materii.cauta_materie(id_materie)))
+
+    def __ui_cauta_student(self):
+        if len(self.__params) != 1:
+            print("Numar parametri invalid!")
+            return
+        id_student = int(self.__params[0])
+        print(str(self.__service_studenti.cauta_student(id_student)))
 
     def __ui_modifica_materie(self):
-        if len(self.__params)!=3:
+        if len(self.__params) != 3:
             print("Numar parametri invalid!")
             return
         id_materie = int(self.__params[0])
@@ -30,7 +55,7 @@ class UI:
         print("Materie modificata cu succes")
 
     def __ui_modifica_student(self):
-        if len(self.__params)!=2:
+        if len(self.__params) != 2:
             print("Numar parametri invalid!")
             return
         id_student = int(self.__params[0])
@@ -39,7 +64,7 @@ class UI:
         print("Student modificat cu succes")
 
     def __ui_sterge_materie(self):
-        if len(self.__params)!=1:
+        if len(self.__params) != 1:
             print("Numar parametri invalid!")
             return
         id_materie = int(self.__params[0])
@@ -47,7 +72,7 @@ class UI:
         print(f"Materia cu id-ul {id_materie} si notele acesteia au fost sterse")
 
     def __ui_print_materii(self):
-        if len(self.__params)!=0:
+        if len(self.__params) != 0:
             print("Numar parametri invalid!")
             return
         materii = self.__service_materii.get_all_materii()
@@ -55,9 +80,8 @@ class UI:
             print("Nu exista materii in aplicatie")
             return
         for materie in materii:
-            if materie.get_sters() == False:
+            if not materie.get_sters():
                 print(materie)
-
 
     def __ui_adauga_materie(self):
         if len(self.__params) != 3:
@@ -78,7 +102,7 @@ class UI:
             print(sef_promotie)
 
     def __ui_sterge_student_si_note(self):
-        if len(self.__params)!=1:
+        if len(self.__params) != 1:
             print("Numar parametri invalid!")
             return
         id_student = int(self.__params[0])
@@ -86,7 +110,7 @@ class UI:
         print(f"Studentul cu id-ul {id_student} si notele lui sterse cu succes")
 
     def __ui_print_studenti(self):
-        if len(self.__params)!=0:
+        if len(self.__params) != 0:
             print("Numar parametri invalid!")
             return
         studenti = self.__service_studenti.get_all_studenti()
@@ -94,11 +118,11 @@ class UI:
             print("Nu exista studenti in aplicatie")
             return
         for student in studenti:
-            if student.get_sters()==False:
+            if not student.get_sters():
                 print(student)
 
     def __ui_adauga_student(self):
-        if len(self.__params)!=2:
+        if len(self.__params) != 2:
             print("Numar parametri invalid")
             return
         id_student = int(self.__params[0])

@@ -2,12 +2,14 @@ from Erori.repo_error import RepoError
 
 
 class RepoNote:
-
+    """
+    Clasa RepoNote care contine un dictionar de note de tip Nota
+    """
     def __init__(self):
         self.__note = {}
 
     def adauga_nota(self, nota):
-        if nota.get_id_nota() in self.__note:
+        if nota.get_id_nota() in self.__note and not self.__note[nota.get_id_nota()].get_sters():
             raise RepoError("nota existent!")
         self.__note[nota.get_id_nota()] = nota
 

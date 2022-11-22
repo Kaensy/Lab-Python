@@ -11,7 +11,7 @@ class RepoStudenti:
     def adauga_student(self, student):
         """
         Incearca adaugarea studentului student in dictionarul __studenti daca  id-ul acestuia nu apare
-        deja in dictionar
+        deja in dictionar sau daca apare dar este sters
         :param student: student
         :return: - ( studentul student este adaugat in dictionar )
         :raises : RepoError cu mesajul "student existent" - daca id_ul studentului student apare in dictionar
@@ -42,7 +42,7 @@ class RepoStudenti:
         :return: rez : Student - ( studentul cu id id_student din dictionar )
         :raises: RepoError cu mesajul "student inexistent" - daca id_student nu se afla in lista
         """
-        if id_student not in self.__studenti:
+        if id_student not in self.__studenti or self.__studenti[id_student].get_sters():
             raise RepoError("student inexistent!")
         return self.__studenti[id_student]
 

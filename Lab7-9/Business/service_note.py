@@ -2,7 +2,9 @@ from Domain.sef_promotie_dto import SefPromotieDTO
 
 
 class ServiceNote:
-
+    """
+    Clasa ServiceNote contine clasele ValidatorNota, RepoNote, RepoStudenti si RepoMaterii
+    """
     def __init__(self, validator_nota, repo_note, repo_studenti, repo_materii):
         self.__validator_nota = validator_nota
         self.__repo_note = repo_note

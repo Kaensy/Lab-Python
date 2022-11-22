@@ -139,7 +139,7 @@ class Teste:
             repo_materii.modifica_materie(materie_modificare_invalida)
             assert False
         except RepoError as re:
-            assert (str(re) == "materie inexistenta")
+            assert (str(re) == "materie inexistenta!")
         repo_materii.modifica_materie(materie_modificare)
         assert (repo_materii.cauta_materie(1) == materie_modificare)
         try:
@@ -159,10 +159,19 @@ class Teste:
         validatorstudent = ValidatorStudent()
         repostudenti = RepoStudenti()
         service_studenti = ServiceStudenti(validatorstudent,repostudenti)
+        student_unu = Student(1, "Lau")
+        student_modificat = Student(1, "Didi")
         assert(len(service_studenti.get_all_studenti())==0)
         service_studenti.adauga_student(1, "Lau")
+        assert (service_studenti.cauta_student(1) == student_unu)
         assert (len(service_studenti.get_all_studenti()) == 1)
         service_studenti.modifica_student(1,"Didi")
+        assert (service_studenti.cauta_student(1) == student_modificat)
+        try:
+            service_studenti.modifica_student(2, "Cineva")
+            assert False
+        except RepoError as re:
+            assert (str(re) == "student inexistent!")
         try:
             service_studenti.adauga_student(1,"Lau")
             assert False
@@ -172,14 +181,54 @@ class Teste:
         validatormaterie = ValidatorMaterie()
         repomaterii = RepoMaterii()
         service_materii = ServiceMaterii(validatormaterie, repomaterii)
+        materie_unu = Materie(1, "Mate", "Matei")
+        materie_modificata = Materie(1, "Algebra", "Altul")
         assert (len(service_materii.get_all_materii()) == 0)
         service_materii.adauga_materie(1, "Mate", "Matei")
+        assert(service_materii.cauta_materie(1) == materie_unu)
         assert (len(service_materii.get_all_materii()) == 1)
         service_materii.modifica_materie(1, "Algebra" , "Altul")
+        assert (service_materii.cauta_materie(1) == materie_modificata)
+        try:
+            service_materii.modifica_materie(2, "a", "a")
+            assert False
+        except RepoError as re:
+            assert (str(re) == "materie inexistenta!")
+        try:
+            service_materii.adauga_materie(1, "AltaMaterie", "AltNume")
+            assert False
+        except RepoError as re:
+            assert (str(re) == "materie existenta!")
 
         validatornota = ValidatorNota()
         reponote = RepoNote()
         service_note = ServiceNote(validatornota, reponote, repostudenti, repomaterii)
+        service_note.sterge_student_si_notele_lui(1)
+        assert (len(service_studenti.get_all_studenti()) == 0)
+        try:
+            service_note.sterge_student_si_notele_lui(1)
+            assert False
+        except RepoError as re:
+            assert (str(re) == "student inexistent!")
+        try:
+            service_studenti.cauta_student(1)
+            assert False
+        except RepoError as re:
+            assert (str(re) == "student inexistent!")
+        service_note.sterge_materie_si_note(1)
+        assert (len(service_materii.get_all_materii()) == 0)
+        try:
+            service_note.sterge_materie_si_note(1)
+            assert False
+        except RepoError as re:
+            assert (str(re) == "materie inexistenta!")
+        try:
+            service_materii.cauta_materie(1)
+            assert False
+        except RepoError as re:
+            assert (str(re) == "materie inexistenta!")
+
+
 
 
     def run(self):
