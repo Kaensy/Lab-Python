@@ -1,3 +1,6 @@
+from Erori.validation_error import ValidError
+
+
 class ValidatorNota:
 
     def __init__(self):
@@ -9,3 +12,5 @@ class ValidatorNota:
             erori += "id invalid!\n"
         if not (0 < nota.get_nota() < 10):
             erori += "nota invalida!\n"
+        if len(erori)>0:
+            raise ValidError(erori)

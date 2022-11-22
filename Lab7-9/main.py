@@ -7,6 +7,7 @@ from Repository.repo_note import RepoNote
 from Business.service_studenti import ServiceStudenti
 from Business.service_materii import ServiceMaterii
 from Business.service_note import ServiceNote
+from Teste.teste import Teste
 from Prezentare.ui import UI
 
 if __name__ == '__main__':
@@ -20,4 +21,6 @@ if __name__ == '__main__':
     service_materii = ServiceMaterii(validator_materie, repo_materii)
     service_note = ServiceNote(validator_nota, repo_note, repo_studenti, repo_materii)
     ui = UI(service_studenti, service_materii, service_note)
+    test = Teste()
+    test.run()
     ui.run()

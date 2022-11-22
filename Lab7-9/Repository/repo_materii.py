@@ -2,7 +2,9 @@ from Erori.repo_error import RepoError
 
 
 class RepoMaterii:
-
+    """
+    Clasa RepoMaterii contine un dictionar de materii de tip Materie
+    """
     def __init__(self):
         self.__materii = {}
 
