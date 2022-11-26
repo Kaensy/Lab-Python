@@ -95,6 +95,7 @@ class Teste:
         assert (repo_studenti.__len__() == 0)
         repo_studenti.adauga_student(student_unu)
         assert (repo_studenti.__len__() == 1)
+        assert (repo_studenti.get_all() == ["1 Gabi"])
         student_invalid = Student(1, "Lau")
         try:
             repo_studenti.adauga_student(student_invalid)
@@ -129,6 +130,7 @@ class Teste:
         assert (repo_materii.__len__() == 0)
         repo_materii.adauga_materie(materie_unu)
         assert (repo_materii.__len__() == 1)
+        assert (repo_materii.get_all() == ["1 Mate Matei"])
         try:
             repo_materii.adauga_materie(materie_modificare)
             assert False
@@ -228,7 +230,11 @@ class Teste:
         except RepoError as re:
             assert (str(re) == "materie inexistenta!")
 
+        service_studenti.adaugare_studenti_random(20)
+        assert (len(service_studenti.get_all_studenti()) == 20)
 
+        service_materii.adaugare_materii_random(20)
+        assert (len(service_materii.get_all_materii()) == 20)
 
 
     def run(self):

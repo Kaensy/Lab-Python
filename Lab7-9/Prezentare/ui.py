@@ -14,14 +14,31 @@ class UI:
             "sterge_student": self.__ui_sterge_student_si_note,
             "modifica_student": self.__ui_modifica_student,
             "cauta_student": self.__ui_cauta_student,
+            "adauga_studenti_random": self.__ui_adauga_studenti_random,
             "sefi_promotie": self.__ui_sefi_promotie,
             "adauga_materie": self.__ui_adauga_materie,
             "print_materii": self.__ui_print_materii,
             "sterge_materie": self.__ui_sterge_materie,
             "modifica_materie": self.__ui_modifica_materie,
             "cauta_materie": self.__ui_cauta_materie,
+            "adauga_materii_random": self.__ui_adauga_materii_random,
             "comenzi": self.__ui_afisare_comenzi
             }
+
+    def __ui_adauga_materii_random(self):
+        if len(self.__params) != 1:
+            print("Numar parametri invalid!")
+            return
+        times = int(self.__params[0])
+        self.__service_materii.adaugare_materii_random(times)
+
+    def __ui_adauga_studenti_random(self):
+        if len(self.__params) != 1:
+            print("Numar parametri invalid!")
+            return
+        times = int(self.__params[0])
+        self.__service_studenti.adaugare_studenti_random(times)
+
 
     def __ui_afisare_comenzi(self):
         if len(self.__params) != 0:
@@ -80,7 +97,6 @@ class UI:
             print("Nu exista materii in aplicatie")
             return
         for materie in materii:
-            if not materie.get_sters():
                 print(materie)
 
     def __ui_adauga_materie(self):
@@ -118,8 +134,7 @@ class UI:
             print("Nu exista studenti in aplicatie")
             return
         for student in studenti:
-            if not student.get_sters():
-                print(student)
+            print(student)
 
     def __ui_adauga_student(self):
         if len(self.__params) != 2:

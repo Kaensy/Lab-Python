@@ -1,4 +1,5 @@
 from Domain.student import Student
+import random
 
 
 class ServiceStudenti:
@@ -54,3 +55,22 @@ class ServiceStudenti:
         """
         self.__validator_student.valideaza_id_student(id_student)
         return self.__repo_studenti.cauta_student(id_student)
+
+    def adaugare_studenti_random(self, times):
+        """
+        adauga times nr de studenti cu id id_student random si nume nume_student random in dictionarul RepoStudenti
+        :param times: int
+        :return: - ( adauga times studenti in RepoStudenti )
+        """
+        for d in range(times):
+            while True:
+                id = random.randint(0, 100+times+len(self.get_all_studenti()))
+                nume_student = ""
+                nr_lit = random.randint(5, 16)
+                for i in range(nr_lit):
+                    nume_student += chr(random.randint(67, 122))
+                try:
+                    self.adauga_student(id, nume_student)
+                    break
+                except:
+                    pass

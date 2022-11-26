@@ -1,4 +1,5 @@
 from Domain.materie import Materie
+import random
 
 
 class ServiceMaterii:
@@ -58,4 +59,26 @@ class ServiceMaterii:
         self.__validator_materie.valideaza_id_materie(id_materie)
         return self.__repo_materii.cauta_materie(id_materie)
 
-
+    def adaugare_materii_random(self, times):
+        """
+        adauga times materii de tip Materie formate din id random, nume_materie random si
+        nume_profesor random in dictionarul RepoMaterii
+        :param times: int
+        :return: - ( adauga times materii de tip Mateie in RepoMaterii
+        """
+        for d in range(times):
+            while True:
+                id = random.randint(0, 100+times+len(self.get_all_materii()))
+                nume_materie = ""
+                nume_profesor = ""
+                nr_lit = random.randint(5, 16)
+                for i in range(nr_lit):
+                    nume_materie += chr(random.randint(67, 122))
+                nr_lit = random.randint(5, 16)
+                for i in range(nr_lit):
+                    nume_profesor += chr(random.randint(67, 122))
+                try:
+                    self.adauga_materie(id, nume_materie, nume_profesor)
+                    break
+                except:
+                    pass
