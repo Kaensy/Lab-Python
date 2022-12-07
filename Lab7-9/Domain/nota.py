@@ -1,3 +1,7 @@
+from Domain.student import Student
+from Domain.materie import Materie
+
+
 class Nota:
     """
     Clasa Nota care contine elemente cu id-ul unic de tip int id_nota, studentul de tip Student student,
@@ -53,9 +57,16 @@ class Nota:
         :return: - ( __nota = nota )
         """
         self.__nota = nota
+
     def sterge(self):
         """
         Marcheaza nota ca find stearsa
         :return: - ( __sters = True )
         """
         self.__sters = True
+
+    def __eq__(self, other):
+        return self.__id_nota == other.__id_nota
+
+    def __str__(self):
+        return f"{self.__student.getNume()} - {self.__materie.get_nume_materie()} : {self.__nota} nota cu id-ul {self.__id_nota}"

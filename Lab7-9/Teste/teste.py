@@ -95,7 +95,7 @@ class Teste:
         assert (repo_studenti.__len__() == 0)
         repo_studenti.adauga_student(student_unu)
         assert (repo_studenti.__len__() == 1)
-        assert (repo_studenti.get_all() == ["1 Gabi"])
+        assert (repo_studenti.get_all()[0].__str__() == "1 Gabi")
         student_invalid = Student(1, "Lau")
         try:
             repo_studenti.adauga_student(student_invalid)
@@ -130,7 +130,7 @@ class Teste:
         assert (repo_materii.__len__() == 0)
         repo_materii.adauga_materie(materie_unu)
         assert (repo_materii.__len__() == 1)
-        assert (repo_materii.get_all() == ["1 Mate Matei"])
+        assert (repo_materii.get_all()[0].__str__() == "1 Mate Matei")
         try:
             repo_materii.adauga_materie(materie_modificare)
             assert False

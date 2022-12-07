@@ -22,8 +22,43 @@ class UI:
             "modifica_materie": self.__ui_modifica_materie,
             "cauta_materie": self.__ui_cauta_materie,
             "adauga_materii_random": self.__ui_adauga_materii_random,
-            "comenzi": self.__ui_afisare_comenzi
+            "comenzi": self.__ui_afisare_comenzi,
+            "asignare_nota": self.__ui_asignare_nota,
+            "print_note": self.__ui_print_note,
+            "lista_studenti_note": self.__ui_lista_studenti_note,
             }
+
+    def __ui_lista_studenti_note(self):
+        if len(self.__params) != 1:
+            print("Numar parametri invalid!")
+            return
+        id_materie = int(self.__params[0])
+        lista_studenti_note = self.__service_note.lista_studenti_note(id_materie)
+        for student in lista_studenti_note:
+            print(student)
+
+    def __ui_print_note(self):
+        if len(self.__params) != 0:
+            print("Numar parametri invalid!")
+            return
+        note = self.__service_note.get_all_note()
+        if len(note) == 0:
+            print("Nu exista note in aplicatie")
+            return
+        for nota in note:
+                print(nota)
+
+    def __ui_asignare_nota(self):
+        if len(self.__params) != 4:
+            print("Numar parametri invalid!")
+            return
+        id_nota = int(self.__params[0])
+        id_student = int(self.__params[1])
+        id_materie = int(self.__params[2])
+        nota = float(self.__params[3])
+        self.__service_note.asignare_nota(id_nota, id_student, id_materie, nota)
+        print("Nota asignata cu succes")
+
 
     def __ui_adauga_materii_random(self):
         if len(self.__params) != 1:

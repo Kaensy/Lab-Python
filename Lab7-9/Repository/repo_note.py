@@ -14,6 +14,11 @@ class RepoNote:
         self.__note[nota.get_id_nota()] = nota
 
 
+    def sterge_nota(self,id_nota):
+        if id_nota not in self.__note or self.__note[id_nota].get_sters():
+            raise RepoError("nota inexistenta!")
+        self.__note[id_nota].sterge()
+
     def get_all(self):
         note = []
         for nota_id in self.__note:

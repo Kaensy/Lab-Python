@@ -67,7 +67,7 @@ class RepoMaterii:
         materii = []
         for materie_id in self.__materii:
             if not self.__materii[materie_id].get_sters():
-                materii.append(str(self.__materii[materie_id]))
+                materii.append(self.__materii[materie_id])
         return materii
 
     def __len__(self):

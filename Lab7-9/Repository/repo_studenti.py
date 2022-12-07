@@ -68,7 +68,7 @@ class RepoStudenti:
         studenti = []
         for student_id in self.__studenti:
             if not self.__studenti[student_id].get_sters():
-                studenti.append(str(self.__studenti[student_id]))
+                studenti.append(self.__studenti[student_id])
         return studenti
 
     def __len__(self):
