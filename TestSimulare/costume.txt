@@ -1,0 +1,11 @@
+1,Rochie Vrajitoare Rosie,Halloween,2,True
+2,Rochie Vrajitoare Galbena,Halloween,400,False
+3,Rochie Vrajitoare Albastra,Halloween,300,True
+4,Rochie Vrajitoare Verde,Halloween,520,True
+5,Costum Vampir Rosu,Craciun,7,True
+6,Costum Vampir Verde,Halloween,700,False
+7,Costum Vampir Mov,Halloween,500,True
+8,Costum Vampir Albastru,Halloween,25,True
+9,Rochie Vrajitoare Mov,Halloween,10,False
+10,Rochie Vrajitoare Purpuriu,Halloween,5,True
+
