@@ -46,7 +46,7 @@ class UI:
             print("Nu exista note in aplicatie")
             return
         for nota in note:
-                print(nota)
+            print(nota)
 
     def __ui_asignare_nota(self):
         if len(self.__params) != 4:
@@ -58,7 +58,6 @@ class UI:
         nota = float(self.__params[3])
         self.__service_note.asignare_nota(id_nota, id_student, id_materie, nota)
         print("Nota asignata cu succes")
-
 
     def __ui_adauga_materii_random(self):
         if len(self.__params) != 1:
@@ -74,7 +73,6 @@ class UI:
         times = int(self.__params[0])
         self.__service_studenti.adaugare_studenti_random(times)
 
-
     def __ui_afisare_comenzi(self):
         if len(self.__params) != 0:
             print("Numar parametri invalid!")
@@ -82,6 +80,7 @@ class UI:
         for comanda in self.__comenzi:
             print(comanda)
         print("exit")
+
     def __ui_cauta_materie(self):
         if len(self.__params) != 1:
             print("Numar parametri invalid!")
@@ -132,7 +131,7 @@ class UI:
             print("Nu exista materii in aplicatie")
             return
         for materie in materii:
-                print(materie)
+            print(materie)
 
     def __ui_adauga_materie(self):
         if len(self.__params) != 3:
