@@ -157,6 +157,28 @@ class Teste:
         repo_materii.stergere_materie(1)
         assert (repo_materii.__len__() == 0)
 
+        repo_note = RepoNote()
+        nota_unu = Nota(1, student_unu, materie_unu, 9)
+        assert (len(repo_note.get_all()) == 0)
+        repo_note.adauga_nota(nota_unu)
+        assert (len(repo_note.get_all()) == 1)
+        try:
+            repo_note.adauga_nota(nota_unu)
+            assert False
+        except RepoError as re:
+            assert (str(re) == "nota existenta!")
+
+        assert(repo_note.get_all()[0] == nota_unu)
+
+        repo_note.sterge_nota(1)
+        assert (len(repo_note.get_all()) == 0)
+        try:
+            repo_note.sterge_nota(1)
+            assert False
+        except RepoError as re:
+            assert (str(re) == "nota inexistenta!")
+
+
     def teste_service(self):
         validatorstudent = ValidatorStudent()
         repostudenti = RepoStudenti()
@@ -205,6 +227,16 @@ class Teste:
         validatornota = ValidatorNota()
         reponote = RepoNote()
         service_note = ServiceNote(validatornota, reponote, repostudenti, repomaterii)
+        assert (len(service_note.get_all_note()) == 0)
+        service_note.asignare_nota(1,1,1,10)
+        try:
+            service_note.asignare_nota(1,1,1,10)
+            assert False
+        except RepoError as re:
+            assert (str(re) == "nota existenta!")
+        assert(len(service_note.get_all_note()) == 1)
+        assert(service_note.get_sefi_promotie()[0].__str__() == "studentul Didi cu media 10.0")
+        assert(service_note.lista_studenti_note(1)[0].__str__() == "Studentul Didi cu nota 10")
         service_note.sterge_student_si_notele_lui(1)
         assert (len(service_studenti.get_all_studenti()) == 0)
         try:
@@ -230,11 +262,12 @@ class Teste:
         except RepoError as re:
             assert (str(re) == "materie inexistenta!")
 
-        service_studenti.adaugare_studenti_random(20)
-        assert (len(service_studenti.get_all_studenti()) == 20)
+        # service_studenti.adaugare_studenti_random(20)
+        # assert (len(service_studenti.get_all_studenti()) == 20)
+        #
+        # service_materii.adaugare_materii_random(20)
+        # assert (len(service_materii.get_all_materii()) == 20)
 
-        service_materii.adaugare_materii_random(20)
-        assert (len(service_materii.get_all_materii()) == 20)
 
 
     def run(self):

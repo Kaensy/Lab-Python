@@ -10,7 +10,7 @@ class RepoNote:
 
     def adauga_nota(self, nota):
         if nota.get_id_nota() in self.__note and not self.__note[nota.get_id_nota()].get_sters():
-            raise RepoError("nota existent!")
+            raise RepoError("nota existenta!")
         self.__note[nota.get_id_nota()] = nota
 
 

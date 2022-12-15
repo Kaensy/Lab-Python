@@ -26,7 +26,15 @@ class UI:
             "asignare_nota": self.__ui_asignare_nota,
             "print_note": self.__ui_print_note,
             "lista_studenti_note": self.__ui_lista_studenti_note,
+            "nota_frecventa_minima": self.__ui_nota_frecventa_minima
             }
+
+    def __ui_nota_frecventa_minima(self):
+        if len(self.__params) != 0:
+            print("Numar parametri invalid!")
+            return
+        nota_frecv_minima = self.__service_note.nota_frecventa_minima()
+        print(f"Nota {nota_frecv_minima[0]} care apare de {nota_frecv_minima[1]} ori")
 
     def __ui_lista_studenti_note(self):
         if len(self.__params) != 1:
