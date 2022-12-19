@@ -1,9 +1,9 @@
 from Validator.validator_student import ValidatorStudent
 from Validator.validator_materie import ValidatorMaterie
 from Validator.validator_nota import ValidatorNota
-from Repository.repo_studenti import RepoStudenti
-from Repository.repo_materii import RepoMaterii
-from Repository.repo_note import RepoNote
+from Repository.file_repo_studenti import FileRepoStudenti
+from Repository.file_repo_materii import FileRepoMaterii
+from Repository.file_repo_note import FileRepoNote
 from Business.service_studenti import ServiceStudenti
 from Business.service_materii import ServiceMaterii
 from Business.service_note import ServiceNote
@@ -12,10 +12,16 @@ from Domain.materie import Materie
 from Domain.nota import Nota
 from Erori.validation_error import ValidError
 from Erori.repo_error import RepoError
+
+
 class Teste:
 
     def __init__(self):
         pass
+
+    def __goleste_fisier(self, cale_fisier):
+        with open(cale_fisier, "w") as f:
+            pass
 
     def teste_domain(self):
         id = 1
@@ -91,7 +97,9 @@ class Teste:
         student_unu = Student(1, "Gabi")
         student_modifica = Student(1, "Lau")
         student_modifica_invalid = Student(2, "Lau")
-        repo_studenti = RepoStudenti()
+        cale_fisier_studenti = "Teste/test_studenti.txt"
+        repo_studenti = FileRepoStudenti(cale_fisier_studenti)
+        self.__goleste_fisier(cale_fisier_studenti)
         assert (repo_studenti.__len__() == 0)
         repo_studenti.adauga_student(student_unu)
         assert (repo_studenti.__len__() == 1)
@@ -126,7 +134,8 @@ class Teste:
         materie_unu = Materie(1, "Mate", "Matei")
         materie_modificare = Materie(1, "Algebra", "Altcineva")
         materie_modificare_invalida = Materie(2, "Algebra", "Altcineva")
-        repo_materii = RepoMaterii()
+        cale_fisier_materii = "Teste/test_materii.txt"
+        repo_materii = FileRepoMaterii(cale_fisier_materii)
         assert (repo_materii.__len__() == 0)
         repo_materii.adauga_materie(materie_unu)
         assert (repo_materii.__len__() == 1)
@@ -159,7 +168,8 @@ class Teste:
 
     def teste_service(self):
         validatorstudent = ValidatorStudent()
-        repostudenti = RepoStudenti()
+        cale_fisier_studenti = "Teste/test_studenti.txt"
+        repostudenti = FileRepoStudenti(cale_fisier_studenti)
         service_studenti = ServiceStudenti(validatorstudent,repostudenti)
         student_unu = Student(1, "Lau")
         student_modificat = Student(1, "Didi")
@@ -181,7 +191,8 @@ class Teste:
             assert (str(re) == "student existent!")
 
         validatormaterie = ValidatorMaterie()
-        repomaterii = RepoMaterii()
+        cale_fisier_materii = "Teste/test_materii.txt"
+        repomaterii = FileRepoMaterii(cale_fisier_materii)
         service_materii = ServiceMaterii(validatormaterie, repomaterii)
         materie_unu = Materie(1, "Mate", "Matei")
         materie_modificata = Materie(1, "Algebra", "Altul")
@@ -203,7 +214,8 @@ class Teste:
             assert (str(re) == "materie existenta!")
 
         validatornota = ValidatorNota()
-        reponote = RepoNote()
+        cale_fisier_note = "Teste/test_note.txt"
+        reponote = FileRepoNote(cale_fisier_note)
         service_note = ServiceNote(validatornota, reponote, repostudenti, repomaterii)
         service_note.sterge_student_si_notele_lui(1)
         assert (len(service_studenti.get_all_studenti()) == 0)

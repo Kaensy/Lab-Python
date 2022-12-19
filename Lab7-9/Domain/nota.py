@@ -69,4 +69,4 @@ class Nota:
         return self.__id_nota == other.__id_nota
 
     def __str__(self):
-        return f"{self.__student.getNume()} - {self.__materie.get_nume_materie()} : {self.__nota} nota cu id-ul {self.__id_nota}"
+        return f"{self.__id_nota} {self.__student.getNume()} {self.__materie.get_nume_materie()} {self.__nota}"
