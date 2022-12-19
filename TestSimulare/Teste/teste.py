@@ -48,7 +48,6 @@ class Teste:
         costum = Costum(1, "Rochie Vrajitoare Rosie", "Halloween", 300, "False")
         costum_acelasi = Costum(1, "Rochie  Rosie", "Hallo", 300, "False")
 
-
         assert len(repo_costume) == 0
         repo_costume.adauga_costum(costum)
         assert len(repo_costume) == 1

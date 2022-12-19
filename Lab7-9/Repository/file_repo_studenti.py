@@ -42,9 +42,9 @@ class FileRepoStudenti(RepoStudenti):
         RepoStudenti.sterge_student(self,id_student)
         self.__write_all_to_file()
 
-    def cauta_student(self,id_student):
+    def cauta_student(self, id_student):
         self.__read_all_from_file()
-        return RepoStudenti.cauta_student(self,id_student)
+        return RepoStudenti.cauta_student(self, id_student)
 
     def get_all(self):
         self.__read_all_from_file()
