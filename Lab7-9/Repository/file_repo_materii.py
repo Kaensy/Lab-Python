@@ -16,7 +16,7 @@ class FileRepoMaterii(RepoMaterii):
                 line = line.strip()
                 if line != "":
                     parts = line.split()
-                    id_materie = parts[0]
+                    id_materie = int(parts[0])
                     nume_materie = parts[1]
                     nume_profesor = parts[2]
                     materie = Materie(id_materie, nume_materie, nume_profesor)

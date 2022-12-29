@@ -50,7 +50,7 @@ class ServiceNote:
         info_studenti = {}
         note = self.__repo_note.get_all()
         for nota in note:
-            id_student_nota = nota.get_student().getID_student()
+            id_student_nota = nota.get_student()
             valoare_nota = nota.get_nota()
             if id_student_nota not in info_studenti:
                 info_studenti[id_student_nota] = []

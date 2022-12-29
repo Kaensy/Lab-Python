@@ -17,11 +17,11 @@ class FileRepoNote(RepoNote):
                 line = line.strip()
                 if line != "":
                     parts = line.split()
-                    id_nota = parts[0]
-                    id_student = parts[1]
-                    id_materie = parts[2]
-                    valoare_nota = parts[3]
-                    nota = Nota(id_nota, id_student, id_materie, valoare_nota)
+                    id_nota = int(parts[0])
+                    id_student = int(parts[1])
+                    id_materie = int(parts[2])
+                    valoare_nota = float(parts[3])
+                    nota = NotaDTO(id_nota, id_student, id_materie, valoare_nota)
                     self._note[id_nota] = nota
 
     def __write_all_to_file(self):

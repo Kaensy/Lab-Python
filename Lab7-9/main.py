@@ -9,6 +9,7 @@ from Business.service_materii import ServiceMaterii
 from Business.service_note import ServiceNote
 from Teste.teste import Teste
 from Prezentare.ui import UI
+from Repository.repo_studenti import RepoStudenti
 
 if __name__ == '__main__':
     validator_student = ValidatorStudent()
