@@ -1,6 +1,7 @@
 from Domain.sef_promotie_dto import SefPromotieDTO
 from Domain.nota import Nota
 from Domain.student_nota_dto import StudentNotaDTO
+from Domain.student_nota_dto_alfabetic import StudentNotaDTOAlfabetic
 
 
 class ServiceNote:
@@ -19,9 +20,8 @@ class ServiceNote:
         :param id_student: int
         :return: - ( sterge studentul cu id-ul id_student si notele acestuia la toate materile )
         """
-        student = self.__repo_studenti.cauta_student(id_student)
         note = self.__repo_note.get_all()
-        note_student = [x for x in note if x.get_student() == student]
+        note_student = [x for x in note if x.get_id_student() == id_student]
         for nota_student in note_student:
             self.__repo_note.sterge_nota(nota_student.get_id_nota())
         self.__repo_studenti.sterge_student(id_student)
@@ -32,9 +32,8 @@ class ServiceNote:
         :param id_materie: int
         :return: - ( sterge materia de id id_materie si toate notele acesteia )
         """
-        materie = self.__repo_materii.cauta_materie(id_materie)
         note = self.__repo_note.get_all()
-        note_materie = [x for x in note if x.get_materie() == materie]
+        note_materie = [x for x in note if x.get_id_materie() == id_materie]
         for nota_materie in note_materie:
             self.__repo_note.sterge_nota(nota_materie.get_id_nota())
         self.__repo_materii.stergere_materie(id_materie)
@@ -50,7 +49,7 @@ class ServiceNote:
         info_studenti = {}
         note = self.__repo_note.get_all()
         for nota in note:
-            id_student_nota = nota.get_student()
+            id_student_nota = nota.get_id_student()
             valoare_nota = nota.get_nota()
             if id_student_nota not in info_studenti:
                 info_studenti[id_student_nota] = []
@@ -79,7 +78,7 @@ class ServiceNote:
         :param valoare_nota: float
         :return: - ( RepoNote' = RepoNote U Nota )
         """
-        nota = Nota(id_nota, self.__repo_studenti.cauta_student(id_student), self.__repo_materii.cauta_materie(id_materie), valoare_nota)
+        nota = Nota(id_nota, id_student, id_materie, valoare_nota)
         self.__validator_nota.valideaza(nota)
         self.__repo_note.adauga_nota(nota)
 
@@ -90,27 +89,127 @@ class ServiceNote:
         """
         return self.__repo_note.get_all()
 
-    def lista_studenti_note(self, id_materie):
+    def get_note_afisare(self):
+        lista_note_prezentare = []
+        note = self.__repo_note.get_all()
+        for nota in note:
+            lista_note_prezentare.append(f"{self.__repo_studenti.cauta_student(nota.get_id_student()).getNume()} - {self.__repo_materii.cauta_materie(nota.get_id_materie()).get_nume_materie()} : {nota.get_nota()} cu id-ul {nota.get_id_nota()}")
+        return lista_note_prezentare
+
+    def lista_studenti_note_descresc(self, id_materie):
         """
         creeaza un dictionar de studenti cu notele acestuia la materia Materie cu id-ul id_materie
         creeaza o lista de obiecte de tip student_nota_dto formata din numele unui student impreuna cu nota acestuia
-        ordoneaza alfabetic si dupa descrescator dupa note si returneaza lista
+        ordoneaza descrescator dupa note si returneaza lista
         :param id_materie: int
         :return: rez - list ( lista ordonata alfabetic si descrescator dupa note a studentilor cu note la materia Materie id_materie )
         """
         lista_studenti_note = {}
         note = self.__repo_note.get_all()
         for nota in note:
-            materie = nota.get_materie()
-            if id_materie == materie.get_id_materie():
+            if id_materie == nota.get_id_materie():
                 lista_studenti_note[nota.get_id_nota()] = nota
         lista_studenti = []
         for nota in lista_studenti_note.values():
-            nume_student = nota.get_student().getNume()
+            nume_student = self.__repo_studenti.cauta_student(nota.get_id_student()).getNume()
             nota_student = nota.get_nota()
             student_dto = StudentNotaDTO(nume_student, nota_student)
             lista_studenti.append(student_dto)
         lista_studenti.sort()
+        return lista_studenti
+
+    def partition(self, array, low, high):
+        pivot = array[high]
+        i = low-1
+        for j in range(low, high):
+            if array[j] < pivot:
+                i = i+1
+                (array[i], array[j]) = (array[j], array[i])
+        (array[i+1], array[high]) = (array[high], array[i+1])
+        return i+1
+
+    def quicksort(self, array, low, high):
+        if low < high:
+            pi = self.partition(array, low, high)
+            self.quicksort(array, low, pi-1 )
+            self.quicksort(array, pi+1, high  )
+
+
+
+    def lista_studenti_note_descresc_quicksort(self, id_materie):
+        """
+        creeaza un dictionar de studenti cu notele acestuia la materia Materie cu id-ul id_materie
+        creeaza o lista de obiecte de tip student_nota_dto formata din numele unui student impreuna cu nota acestuia
+        ordoneaza descrescator dupa note si returneaza lista
+        :param id_materie: int
+        :return: rez - list ( lista ordonata alfabetic si descrescator dupa note a studentilor cu note la materia Materie id_materie )
+        """
+        lista_studenti_note = {}
+        note = self.__repo_note.get_all()
+        for nota in note:
+            if id_materie == nota.get_id_materie():
+                lista_studenti_note[nota.get_id_nota()] = nota
+        lista_studenti = []
+        for nota in lista_studenti_note.values():
+            nume_student = self.__repo_studenti.cauta_student(nota.get_id_student()).getNume()
+            nota_student = nota.get_nota()
+            student_dto = StudentNotaDTO(nume_student, nota_student)
+            lista_studenti.append(student_dto)
+        self.quicksort(lista_studenti, 0 , len(lista_studenti)-1)
+        return lista_studenti
+
+    def lista_studenti_note_alfabetic(self, id_materie):
+        """
+        creeaza un dictionar de studenti cu notele acestuia la materia Materie cu id-ul id_materie
+        creeaza o lista de obiecte de tip student_nota_dto formata din numele unui student impreuna cu nota acestuia
+        ordoneaza alfabetic si returneaza lista
+        :param id_materie: int
+        :return: rez - list ( lista ordonata alfabetic si descrescator dupa note a studentilor cu note la materia Materie id_materie )
+        """
+        lista_studenti_note = {}
+        note = self.__repo_note.get_all()
+        for nota in note:
+            if id_materie == nota.get_id_materie():
+                lista_studenti_note[nota.get_id_nota()] = nota
+        lista_studenti = []
+        for nota in lista_studenti_note.values():
+            nume_student = self.__repo_studenti.cauta_student(nota.get_id_student()).getNume()
+            nota_student = nota.get_nota()
+            student_dto = StudentNotaDTOAlfabetic(nume_student, nota_student)
+            lista_studenti.append(student_dto)
+        lista_studenti.sort()
+        return lista_studenti
+
+    def gnomesort(self, array):
+        pos = 0
+        while pos < len(array):
+            if pos == 0 or array[pos] > array[pos-1]:
+                pos = pos+1
+            else:
+                (array[pos-1], array[pos]) = (array[pos], array[pos-1])
+                pos = pos - 1
+
+    def lista_studenti_note_alfabetic_gnomesort(self, id_materie):
+        """
+        O(n^2) -> O(n)
+        creeaza un dictionar de studenti cu notele acestuia la materia Materie cu id-ul id_materie
+        creeaza o lista de obiecte de tip student_nota_dto formata din numele unui student impreuna cu nota acestuia
+        ordoneaza alfabetic si returneaza lista
+        :param id_materie: int
+        :return: rez - list ( lista ordonata alfabetic si descrescator dupa note a studentilor cu note la materia Materie id_materie )
+        """
+        lista_studenti_note = {}
+        note = self.__repo_note.get_all()
+        for nota in note:
+            if id_materie == nota.get_id_materie():
+                lista_studenti_note[nota.get_id_nota()] = nota
+        lista_studenti = []
+        for nota in lista_studenti_note.values():
+            nume_student = self.__repo_studenti.cauta_student(nota.get_id_student()).getNume()
+            nota_student = nota.get_nota()
+            student_dto = StudentNotaDTOAlfabetic(nume_student, nota_student)
+            lista_studenti.append(student_dto)
+        self.gnomesort(lista_studenti)
         return lista_studenti
 
     def nota_frecventa_minima(self):

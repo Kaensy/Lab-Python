@@ -17,7 +17,7 @@ class RepoStudenti:
         :return: - ( studentul student este adaugat in dictionar )
         :raises : RepoError cu mesajul "student existent" - daca id_ul studentului student apare in dictionar
         """
-        if student.getID_student() in self._studenti and self._studenti[student.getID_student()].get_sters() == False:
+        if student.getID_student() in self._studenti:
             raise RepoError("student existent!")
         self._studenti[student.getID_student()] = student
 
@@ -30,9 +30,9 @@ class RepoStudenti:
         :return: - ( studentul cu id id_student din dictionar este marchat ca si sters )
         :raises: RepoError cu mesajul "student inexistent!" - daca id-ul nu se afla in dictionar
         """
-        if id_student not in self._studenti or self._studenti[id_student].get_sters():
+        if id_student not in self._studenti:
             raise RepoError("student inexistent!")
-        self._studenti[id_student].sterge()
+        del self._studenti[id_student]
 
     def cauta_student(self, id_student):
         """
@@ -43,7 +43,7 @@ class RepoStudenti:
         :return: rez : Student - ( studentul cu id id_student din dictionar )
         :raises: RepoError cu mesajul "student inexistent" - daca id_student nu se afla in lista
         """
-        if id_student not in self._studenti or self._studenti[id_student].get_sters():
+        if id_student not in self._studenti:
             raise RepoError("student inexistent!")
         return self._studenti[id_student]
 
@@ -56,7 +56,7 @@ class RepoStudenti:
         :return: - ( studentul cu id-ul studentului student se schimba in studentul student )
         :raises: RepoError : "student inexistent"
         """
-        if student.getID_student() not in self._studenti or self._studenti[student.getID_student()].get_sters():
+        if student.getID_student() not in self._studenti:
             raise RepoError("student inexistent!")
         self._studenti[student.getID_student()] = student
 
@@ -67,13 +67,11 @@ class RepoStudenti:
         """
         studenti = []
         for student_id in self._studenti:
-            if not self._studenti[student_id].get_sters():
-                studenti.append(self._studenti[student_id])
+            studenti.append(self._studenti[student_id])
         return studenti
 
     def __len__(self):
         nr = 0
         for student in self._studenti:
-            if not self._studenti[student].get_sters():
-                nr += 1
+            nr += 1
         return nr

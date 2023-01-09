@@ -82,3 +82,28 @@ class ServiceMaterii:
                     break
                 except:
                     pass
+
+    def adaugare_materii_random_recursiv(self, times):
+        """
+        adauga times materii de tip Materie formate din id random, nume_materie random si
+        nume_profesor random in dictionarul RepoMaterii
+        :param times: int
+        :return: - ( adauga times materii de tip Mateie in RepoMaterii
+        """
+
+        if times:
+            self.adaugare_materii_random_recursiv(times-1)
+            id = random.randint(0, 100+times+len(self.get_all_materii()))
+            nume_materie = ""
+            nume_profesor = ""
+            nr_lit = random.randint(5, 16)
+            for i in range(nr_lit):
+                nume_materie += chr(random.randint(67, 122))
+            nr_lit = random.randint(5, 16)
+            for i in range(nr_lit):
+                nume_profesor += chr(random.randint(67, 122))
+            try:
+                self.adauga_materie(id, nume_materie, nume_profesor)
+            except:
+                self.adaugare_materii_random_recursiv(1)
+        return

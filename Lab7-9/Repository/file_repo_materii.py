@@ -25,8 +25,7 @@ class FileRepoMaterii(RepoMaterii):
     def __write_all_to_file(self):
         with open(self.__cale_catre_fisier, "w") as f:
             for materie in self._materii.values():
-                if not materie.get_sters():
-                    f.write(str(materie)+"\n")
+                f.write(str(materie)+"\n")
 
     def adauga_materie(self, materie):
         self.__read_all_from_file()

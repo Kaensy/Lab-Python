@@ -16,6 +16,10 @@ class ValidatorNota:
         erori = ""
         if nota.get_id_nota() < 0:
             erori += "id invalid!\n"
+        if nota.get_id_student() < 0:
+            erori += "id student invalid!\n"
+        if nota.get_id_materie() < 0:
+            erori += "id materie invalid!\n"
         if not (0 <= nota.get_nota() <= 10):
             erori += "nota invalida!\n"
         if len(erori) > 0:

@@ -22,7 +22,7 @@ class ServiceStudenti:
         """
         student = Student(id_student, nume)
         self.__validator_student.valideaza(student)
-        self.__repo_studenti.adauga_student(student)
+        self.__repo_studenti.adauga_student(student, )
 
     def modifica_student(self, id_student, nume):
         """
@@ -74,3 +74,23 @@ class ServiceStudenti:
                     break
                 except:
                     pass
+
+    def adaugare_studenti_random_recursiv(self, times):
+        """
+        adauga times nr de studenti cu id id_student random si nume nume_student random in dictionarul RepoStudenti
+        :param times: int
+        :return: - ( adauga times studenti in RepoStudenti )
+        """
+
+        if times:
+            self.adaugare_studenti_random_recursiv(int(times-1))
+            id = random.randint(0, 100+times+len(self.get_all_studenti()))
+            nume_student = ""
+            nr_lit = random.randint(5, 16)
+            for i in range(nr_lit):
+                nume_student += chr(random.randint(67, 122))
+            try:
+                self.adauga_student(id, nume_student)
+            except:
+                self.adaugare_studenti_random_recursiv(1)
+        return

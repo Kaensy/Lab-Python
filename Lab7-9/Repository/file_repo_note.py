@@ -2,7 +2,6 @@ from Repository.repo_note import RepoNote
 from Domain.nota_dto import NotaDTO
 from Domain.nota import Nota
 
-
 class FileRepoNote(RepoNote):
 
     def __init__(self, cale_catre_fisier):
@@ -18,17 +17,17 @@ class FileRepoNote(RepoNote):
                 if line != "":
                     parts = line.split()
                     id_nota = int(parts[0])
-                    id_student = int(parts[1])
-                    id_materie = int(parts[2])
+                    student = int(parts[1])
+                    materie = int(parts[2])
                     valoare_nota = float(parts[3])
-                    nota = NotaDTO(id_nota, id_student, id_materie, valoare_nota)
+                    nota = Nota(id_nota, student, materie, valoare_nota)
                     self._note[id_nota] = nota
+
 
     def __write_all_to_file(self):
         with open(self.__cale_catre_fisier, "w") as f:
             for nota in self._note.values():
-                if not nota.get_sters():
-                    f.write(str(nota)+"\n")
+                f.write(str(nota)+"\n")
 
     def adauga_nota(self, nota):
         self.__read_all_from_file()

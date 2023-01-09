@@ -18,5 +18,6 @@ class NotaDTO():
     def get_nota(self):
         return self.__nota
 
+
     def __str__(self):
         return f"{self.__id_nota} {self.__id_student} {self.__id_materie} {self.__nota}"

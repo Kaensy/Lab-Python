@@ -21,12 +21,10 @@ class FileRepoStudenti(RepoStudenti):
                     student = Student(id_student, nume_student)
                     self._studenti[id_student] = student
 
-
     def __write_all_to_file(self):
         with open(self.__cale_catre_fisier, "w") as f:
             for student in self._studenti.values():
-                if not student.get_sters():
-                    f.write(str(student)+"\n")
+                f.write(str(student)+"\n")
 
     def adauga_student(self, student):
         self.__read_all_from_file()

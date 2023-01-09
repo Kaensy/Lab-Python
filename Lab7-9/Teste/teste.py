@@ -30,12 +30,9 @@ class Teste:
         self.__student1 = Student(id, nume)
         assert (self.__student1.getID_student() == id)
         assert (self.__student1.getNume() == nume)
-        assert (not self.__student1.get_sters())
         nume_altul = "Altul"
         self.__student1.setNume(nume_altul)
         assert (self.__student1.getNume() == nume_altul)
-        self.__student1.sterge()
-        assert (self.__student1.get_sters())
 
         nume_materie = "Mate"
         nume_profesor = "Matei"
@@ -43,28 +40,21 @@ class Teste:
         assert (self.__materie1.get_id_materie() == id)
         assert (self.__materie1.get_nume_materie() == nume_materie)
         assert (self.__materie1.get_nume_profesor() == nume_profesor)
-        assert (not self.__materie1.get_sters())
         nume_materie_alta = "Algebra"
         self.__materie1.set_nume_materie(nume_materie_alta)
         assert (self.__materie1.get_nume_materie() == nume_materie_alta)
         nume_profesor_altul = "Altul"
         self.__materie1.set_nume_profesor(nume_profesor_altul)
         assert (self.__materie1.get_nume_profesor() == nume_profesor_altul)
-        self.__materie1.sterge()
-        assert (self.__materie1.get_sters())
-
         nota = 10
-        self.__nota1 = Nota(id, self.__student1, self.__materie1, nota)
+        self.__nota1 = Nota(id, self.__student1.getID_student(), self.__materie1.get_id_materie(), nota)
         assert (self.__nota1.get_nota() == nota)
         assert (self.__nota1.get_id_nota() == id)
-        assert (self.__nota1.get_student() == self.__student1)
-        assert (self.__nota1.get_materie() == self.__materie1)
-        assert (not self.__nota1.get_sters())
+        assert (self.__nota1.get_id_student() == self.__student1.getID_student())
+        assert (self.__nota1.get_id_materie() == self.__materie1.get_id_materie())
         nota_alta = 9
         self.__nota1.set_nota(nota_alta)
         assert (self.__nota1.get_nota() == nota_alta)
-        self.__nota1.sterge()
-        assert (self.__nota1.get_sters())
 
     def teste_validare(self):
         id_invalid = -5
@@ -86,7 +76,7 @@ class Teste:
             assert (str(ve) == "id invalid!\nnume materie invalid!\nnume profesor invalid!\n")
 
         nota_invalida = 15
-        self.__notainvalida = Nota(id_invalid, self.__student1, self.__materie1, nota_invalida)
+        self.__notainvalida = Nota(id_invalid, self.__student1.getID_student(), self.__materie1.get_id_materie(), nota_invalida)
         ValidatorNota.valideaza(ValidatorNota, self.__nota1)
         try:
             ValidatorNota.valideaza(ValidatorNota, self.__notainvalida)
@@ -168,10 +158,13 @@ class Teste:
         repo_materii.stergere_materie(1)
         assert (repo_materii.__len__() == 0)
 
+
         cale_fisier_note = "Teste/test_note.txt"
         repo_note = FileRepoNote(cale_fisier_note)
         self.__goleste_fisier(cale_fisier_note)
-        nota_unu = NotaDTO(1, student_unu.getID_student(), materie_unu.get_id_materie(), 9)
+        repo_studenti.adauga_student(student_unu)
+        repo_materii.adauga_materie(materie_unu)
+        nota_unu = NotaDTO(1, student_unu.getID_student(), materie_unu.get_id_materie(), 9.0)
         assert (len(repo_note.get_all()) == 0)
         repo_note.adauga_nota(nota_unu)
         assert (len(repo_note.get_all()) == 1)
@@ -181,7 +174,7 @@ class Teste:
         except RepoError as re:
             assert (str(re) == "nota existenta!")
 
-        assert(repo_note.get_all()[0] == nota_unu)
+        assert(str(repo_note.get_all()[0]) == str(nota_unu))
 
         repo_note.sterge_nota(1)
         assert (len(repo_note.get_all()) == 0)
@@ -212,7 +205,7 @@ class Teste:
         except RepoError as re:
             assert (str(re) == "student inexistent!")
         try:
-            service_studenti.adauga_student(1,"Lau")
+            service_studenti.adauga_student(1, "Lau")
             assert False
         except RepoError as re:
             assert (str(re) == "student existent!")
@@ -255,7 +248,7 @@ class Teste:
             assert (str(re) == "nota existenta!")
         assert(len(service_note.get_all_note()))
         assert(service_note.get_sefi_promotie()[0].__str__() == "studentul Didi cu media 10.0")
-        assert(service_note.lista_studenti_note(1)[0].__str__() == "Studentul Didi cu nota 10")
+        assert(service_note.lista_studenti_note_descresc(1)[0].__str__() == "Studentul Didi cu nota 10.0")
         service_note.sterge_student_si_notele_lui(1)
         assert (len(service_studenti.get_all_studenti()) == 0)
         try:
@@ -281,13 +274,17 @@ class Teste:
         except RepoError as re:
             assert (str(re) == "materie inexistenta!")
 
-        # service_studenti.adaugare_studenti_random(20)
-        # assert (len(service_studenti.get_all_studenti()) == 20)
-        #
-        # service_materii.adaugare_materii_random(20)
-        # assert (len(service_materii.get_all_materii()) == 20)
+        assert (len(service_studenti.get_all_studenti()) == 0)
+        service_studenti.adaugare_studenti_random(20)
+        assert (len(service_studenti.get_all_studenti()) == 20)
+        service_studenti.adaugare_studenti_random_recursiv(20)
+        assert (len(service_studenti.get_all_studenti()) == 40)
 
-
+        assert (len(service_materii.get_all_materii()) == 0)
+        service_materii.adaugare_materii_random(20)
+        assert (len(service_materii.get_all_materii()) == 20)
+        service_materii.adaugare_materii_random_recursiv(20)
+        assert (len(service_materii.get_all_materii()) == 40)
 
     def run(self):
         self.teste_domain()

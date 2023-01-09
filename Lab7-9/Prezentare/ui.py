@@ -25,7 +25,10 @@ class UI:
             "comenzi": self.__ui_afisare_comenzi,
             "asignare_nota": self.__ui_asignare_nota,
             "print_note": self.__ui_print_note,
-            "lista_studenti_note": self.__ui_lista_studenti_note,
+            "lista_studenti_note_descresc": self.__ui_lista_studenti_note_descresc,
+            "lista_studenti_note_descresc_quicksort": self.__ui_lista_studenti_note_descresc_quicksort,
+            "lista_studenti_note_alfabetic": self.__ui_lista_studenti_note_alfabetic,
+            "lista_studenti_note_alfabetic_gnomesort": self.__ui_lista_studenti_note_alfabetic_gnomesort,
             "nota_frecventa_minima": self.__ui_nota_frecventa_minima
             }
 
@@ -36,12 +39,39 @@ class UI:
         nota_frecv_minima = self.__service_note.nota_frecventa_minima()
         print(f"Nota {nota_frecv_minima[0]} care apare de {nota_frecv_minima[1]} ori")
 
-    def __ui_lista_studenti_note(self):
+    def __ui_lista_studenti_note_alfabetic_gnomesort(self):
         if len(self.__params) != 1:
             print("Numar parametri invalid!")
             return
         id_materie = int(self.__params[0])
-        lista_studenti_note = self.__service_note.lista_studenti_note(id_materie)
+        lista_studenti_note = self.__service_note.lista_studenti_note_alfabetic_gnomesort(id_materie)
+        for student in lista_studenti_note:
+            print(student)
+
+    def __ui_lista_studenti_note_alfabetic(self):
+        if len(self.__params) != 1:
+            print("Numar parametri invalid!")
+            return
+        id_materie = int(self.__params[0])
+        lista_studenti_note = self.__service_note.lista_studenti_note_alfabetic(id_materie)
+        for student in lista_studenti_note:
+            print(student)
+
+    def __ui_lista_studenti_note_descresc_quicksort(self):
+        if len(self.__params) != 1:
+            print("Numar parametri invalid!")
+            return
+        id_materie = int(self.__params[0])
+        lista_studenti_note = self.__service_note.lista_studenti_note_descresc_quicksort(id_materie)
+        for student in lista_studenti_note:
+            print(student)
+
+    def __ui_lista_studenti_note_descresc(self):
+        if len(self.__params) != 1:
+            print("Numar parametri invalid!")
+            return
+        id_materie = int(self.__params[0])
+        lista_studenti_note = self.__service_note.lista_studenti_note_descresc(id_materie)
         for student in lista_studenti_note:
             print(student)
 
@@ -49,7 +79,7 @@ class UI:
         if len(self.__params) != 0:
             print("Numar parametri invalid!")
             return
-        note = self.__service_note.get_all_note()
+        note = self.__service_note.get_note_afisare()
         if len(note) == 0:
             print("Nu exista note in aplicatie")
             return

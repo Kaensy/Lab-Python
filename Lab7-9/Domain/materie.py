@@ -10,14 +10,7 @@ class Materie:
         self.__id_materie = id_materie
         self.__nume_materie = nume_materie
         self.__nume_profesor = nume_profesor
-        self.__sters = False
 
-    def sterge(self):
-        """
-        Marcheaza Materia ca find stearsa
-        :return: - ( self.__sters = True )
-        """
-        self.__sters = True
 
     def get_id_materie(self):
         """
@@ -39,14 +32,6 @@ class Materie:
         :return: rez : string - nume_profesor
         """
         return self.__nume_profesor
-
-    def get_sters(self):
-        """
-        returneaza valoarea de tip bool a campului __sters
-        :return: rez : True - __sters == True
-                     : False - __sters == False
-        """
-        return self.__sters
 
     def set_nume_materie(self, nume_materie):
         """

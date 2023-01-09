@@ -6,14 +6,7 @@ class Student:
     def __init__(self, id_student, nume):
         self.__id_student = id_student
         self.__nume = nume
-        self.__sters = False
 
-    def sterge(self):
-        """
-        Marcheaza studentul ca find sters
-        :return: - ( __sters = True )
-        """
-        self.__sters = True
 
     def getID_student(self):
         """
@@ -36,14 +29,6 @@ class Student:
         :return: - ( __nume = nume )
         """
         self.__nume = nume
-
-    def get_sters(self):
-        """
-        returneaza valoarea de tip bool a campului __sters
-        :return: rez : bool - True ( __sters == True )
-                            - False ( __sters == False )
-        """
-        return self.__sters
 
     def __eq__(self, other):
         return self.__id_student == other.__id_student

@@ -1,18 +1,14 @@
-from Domain.student import Student
-from Domain.materie import Materie
-
 
 class Nota:
     """
     Clasa Nota care contine elemente cu id-ul unic de tip int id_nota, studentul de tip Student student,
     materia de tip Materie materie si nota de tip int nota
     """
-    def __init__(self, id_nota, student, materie, nota):
+    def __init__(self, id_nota, id_student, id_materie, nota):
         self.__id_nota = id_nota
-        self.__student = student
-        self.__materie = materie
+        self.__id_student = id_student
+        self.__id_materie = id_materie
         self.__nota = nota
-        self.__sters = False
 
     def get_id_nota(self):
         """
@@ -21,20 +17,13 @@ class Nota:
         """
         return self.__id_nota
 
-    def get_student(self):
+    def get_id_student(self):
         """
         returneaza studentul de tip Student din __student
         :return: rez : Student - __student
         """
-        return self.__student
+        return self.__id_student
 
-    def get_sters(self):
-        """
-        returneaza valoarea de tip bool a campului __sters
-        :return: rez : bool - True ( __sters == True )
-                            - False ( __sters == False )
-        """
-        return self.__sters
 
     def get_nota(self):
         """
@@ -43,12 +32,12 @@ class Nota:
         """
         return self.__nota
 
-    def get_materie(self):
+    def get_id_materie(self):
         """
         returneaza materia de tip Materie din __materie
         :return: rez : Materie - __materie
         """
-        return self.__materie
+        return self.__id_materie
 
     def set_nota(self, nota):
         """
@@ -58,15 +47,8 @@ class Nota:
         """
         self.__nota = nota
 
-    def sterge(self):
-        """
-        Marcheaza nota ca find stearsa
-        :return: - ( __sters = True )
-        """
-        self.__sters = True
-
     def __eq__(self, other):
         return self.__id_nota == other.__id_nota
 
     def __str__(self):
-        return f"{self.__id_nota} {self.__student.getNume()} {self.__materie.get_nume_materie()} {self.__nota}"
+        return f"{self.__id_nota} {self.__id_student} {self.__id_materie} {self.__nota}"
