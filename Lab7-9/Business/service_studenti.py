@@ -77,9 +77,9 @@ class ServiceStudenti:
 
     def adaugare_studenti_random_recursiv(self, times):
         """
-        adauga times nr de studenti cu id id_student random si nume nume_student random in dictionarul RepoStudenti
+        adauga times studenti cu id id_student random si nume nume_student random in dictionarul RepoStudenti
         :param times: int
-        :return: - ( adauga times studenti in RepoStudenti )
+        :return: - ( adauga student random in RepoStudenti si apeleaza functia de times-1 daca times > 0)
         """
 
         if times:

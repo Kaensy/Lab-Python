@@ -184,7 +184,6 @@ class Teste:
         except RepoError as re:
             assert (str(re) == "nota inexistenta!")
 
-
     def teste_service(self):
         validatorstudent = ValidatorStudent()
         cale_fisier_studenti = "Teste/test_studenti.txt"
@@ -285,6 +284,9 @@ class Teste:
         assert (len(service_materii.get_all_materii()) == 20)
         service_materii.adaugare_materii_random_recursiv(20)
         assert (len(service_materii.get_all_materii()) == 40)
+
+        self.__goleste_fisier(cale_fisier_studenti)
+        self.__goleste_fisier(cale_fisier_materii)
 
     def run(self):
         self.teste_domain()

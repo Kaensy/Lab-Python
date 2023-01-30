@@ -322,13 +322,13 @@ class UnitTestRepoTests(unittest.TestCase):
 
         self.assertEqual(str(self.service_note.get_sefi_promotie()[0]),"studentul Lau cu media 9.65")
 
-        self.assertEqual(str(self.service_note.lista_studenti_note_descresc(self.materie_1.get_id_materie())[0]),"Studentul Lau cu nota 9.4")
-        self.assertEqual(str(self.service_note.lista_studenti_note_descresc(self.materie_1.get_id_materie())[1]),"Studentul Raja cu nota 7.2")
-        self.assertEqual(str(self.service_note.lista_studenti_note_descresc(self.materie_1.get_id_materie())[2]),"Studentul Philip cu nota 4.4")
+        self.assertEqual(str(self.service_note.lista_studenti_note_descresc_quicksort(self.materie_1.get_id_materie())[0]),"Studentul Lau cu nota 9.4")
+        self.assertEqual(str(self.service_note.lista_studenti_note_descresc_quicksort(self.materie_1.get_id_materie())[1]),"Studentul Raja cu nota 7.2")
+        self.assertEqual(str(self.service_note.lista_studenti_note_descresc_quicksort(self.materie_1.get_id_materie())[2]),"Studentul Philip cu nota 4.4")
 
-        self.assertEqual(str(self.service_note.lista_studenti_note_alfabetic(self.materie_1.get_id_materie())[0]),"Studentul Lau cu nota 9.4")
-        self.assertEqual(str(self.service_note.lista_studenti_note_alfabetic(self.materie_1.get_id_materie())[1]),"Studentul Philip cu nota 4.4")
-        self.assertEqual(str(self.service_note.lista_studenti_note_alfabetic(self.materie_1.get_id_materie())[2]),"Studentul Raja cu nota 7.2")
+        self.assertEqual(str(self.service_note.lista_studenti_note_alfabetic_gnomesort(self.materie_1.get_id_materie())[0]),"Studentul Lau cu nota 9.4")
+        self.assertEqual(str(self.service_note.lista_studenti_note_alfabetic_gnomesort(self.materie_1.get_id_materie())[1]),"Studentul Philip cu nota 4.4")
+        self.assertEqual(str(self.service_note.lista_studenti_note_alfabetic_gnomesort(self.materie_1.get_id_materie())[2]),"Studentul Raja cu nota 7.2")
 
         self.assertEqual(self.service_note.nota_frecventa_minima(),(5.3, 1))
 
@@ -347,3 +347,5 @@ class UnitTestRepoTests(unittest.TestCase):
         self.assertEqual(len(self.repo_materii.get_all()), 1)
         with self.assertRaisesRegex(RepoError, "materie inexistenta!"):
             self.service_note.sterge_materie_si_note(self.materie_1.get_id_materie())
+
+unittest.main()

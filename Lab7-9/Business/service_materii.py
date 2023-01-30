@@ -88,7 +88,7 @@ class ServiceMaterii:
         adauga times materii de tip Materie formate din id random, nume_materie random si
         nume_profesor random in dictionarul RepoMaterii
         :param times: int
-        :return: - ( adauga times materii de tip Mateie in RepoMaterii
+        :return: - ( adauga materie random in RepoMaterii si apeleaza functia de times-1 daca times >0 )
         """
 
         if times:
