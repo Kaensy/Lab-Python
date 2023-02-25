@@ -1,0 +1,2 @@
+1 carte 15
+2 robot 20
